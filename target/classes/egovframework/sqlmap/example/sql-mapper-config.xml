@@ -4,7 +4,8 @@
 <configuration>
     <typeAliases>
 		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
-		<typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
-		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/>
+		
+		<!-- VO 추가 생성 시 하단에 추가할 것 -->
+		<typeAlias alias="usrVO" type="egovframework.example.usr.vo.UsrVO"/>
     </typeAliases>
 </configuration>
