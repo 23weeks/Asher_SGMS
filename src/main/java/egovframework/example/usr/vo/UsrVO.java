@@ -47,6 +47,7 @@ public class UsrVO implements Serializable {
 	public void setUsr_id(String usr_id) {
 		this.usr_id = usr_id;
 	}
+	
 	public String getUsr_name() {
 		return usr_name;
 	}
@@ -57,6 +58,9 @@ public class UsrVO implements Serializable {
 		return serialVersionUID;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "UsrVO [usr_id=" + usr_id + ", usr_name=" + usr_name + "]";
+	}
 	
 }

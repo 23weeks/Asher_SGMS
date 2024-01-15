@@ -45,5 +45,13 @@ public interface UsrMapper {
 	 * @exception Exception
 	 */
 	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * ID 중복 체크
+	 * @param usrVO - usr_id
+	 * @return int
+	 * @exception Exception
+	 */
+	int usrDupCheck(UsrVO usrVO) throws Exception;
 
 }

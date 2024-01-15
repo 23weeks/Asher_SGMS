@@ -63,4 +63,9 @@ public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrServic
 	public List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception {
 		return usrMapper.selectUsrList(usrVO);
 	}
+
+	@Override
+	public int usrDupCheck(UsrVO usrVO) throws Exception {
+		return usrMapper.usrDupCheck(usrVO);
+	}
 }

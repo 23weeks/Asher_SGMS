@@ -13,24 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.usr.service;
+package egovframework.example.usr.service.impl;
 
 import java.util.List;
 
 import egovframework.example.usr.vo.UsrVO;
+import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
+
+import org.springframework.stereotype.Repository;
 
 /**
- * @Class Name : UsrService.java
- * @Description : UsrService Class
+ * @Class Name : UsrDAO.java
+ * @Description : Usr DAO Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
  * @ ---------   ---------   -------------------------------
- * @ 2024.01.11           최초생성
+ * @ 2024.01.12           최초생성
  *
  * @author SJLEE
  */
-public interface UsrService {
+
+@Repository("UsrDAO")
+public class UsrDAO extends EgovAbstractDAO {
 
 	/**
 	 * 유저 목록 조회
@@ -38,13 +43,17 @@ public interface UsrService {
 	 * @return 유저 목록
 	 * @exception Exception
 	 */
-	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
+	List<?> selectUsrList(UsrVO usrVO) throws Exception {
+		return list("usrDAO.selectUsrList", usrVO);
+	}
 
 	/**
-	 * 유저 목록 조회
-	 * @param usrVO
-	 * @return 유저 목록
+	 * ID 중복 체크
+	 * @param usrVO - usr_id
+	 * @return int
 	 * @exception Exception
 	 */
-	int usrDupCheck(UsrVO usrVO) throws Exception;
+	int usrDupCheck(UsrVO usrVO) throws Exception {
+		return (int) select("usrDAO.usrDupCheck", usrVO);
+	}
 }

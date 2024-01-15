@@ -7,8 +7,15 @@
 		<result property="usr_name"		column="usr_name"/>
 	</resultMap>
 	
+	<select id="usrDupCheck" parameterType="usrVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM SGMS_USR_LIST
+		 WHERE USR_ID = #{usr_id}
+	</select>
+	
 	<select id="selectUsrList" parameterType="usrVO" resultType="usrVO">
 		SELECT *
-		  FROM testTable
+		  FROM SGMS_USR_LIST
+		 ORDER BY USR_LEVL, CRE_DATE DESC
 	</select>
 </mapper>

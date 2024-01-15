@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,7 +72,67 @@ public class UsrController {
 	public String indexPage() throws Exception {
 		return "usr/indexPage";
 	}
-
+	
+	/**
+	 * 회원가입페이지
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/signUp.do")
+	public String signUp() throws Exception {
+		return "usr/signUp";
+	}
+	
+	/**
+	 * ID중복체크
+	 * @param UsrVO - usr_id
+	 * @param 
+	 * @return int(result)
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/dupCheck.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView dupCheck(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int dupCheck = usrService.usrDupCheck(usrVO);
+		String alertMsg = "";
+		
+		if(dupCheck == 0) {
+			alertMsg = "ID 사용이 가능합니다.";
+		}else {
+			alertMsg = "ID가 이미 존재합니다. 다른 ID를 사용해주세요.";
+		}
+		
+		resultMap.put("dubCheck", dupCheck);
+		resultMap.put("result", alertMsg);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* ajax 테스트용 */
 	@ResponseBody
 	@RequestMapping(path = "/test.ajax", method=RequestMethod.POST, produces="application/json")
 	public ModelAndView test(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
