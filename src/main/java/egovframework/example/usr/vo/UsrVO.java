@@ -35,10 +35,14 @@ public class UsrVO implements Serializable {
 	 */
 	private static final long serialVersionUID = -858838578081269359L;
 
-	private String usr_id;			//회원ID
-	private String usr_name;		//회원이름
-	
-	
+	private String usr_id;			//ID
+	private String usr_pwd;			//비밀번호
+	private String usr_name;		//이름
+	private String usr_brth;		//생년월일
+	private String usr_phone;		//전화번호
+	private String usr_addr;		//주소
+	private String usr_levl;		//등급
+	private String cre_date;		//생성일자
 	
 	
 	public String getUsr_id() {
@@ -47,7 +51,6 @@ public class UsrVO implements Serializable {
 	public void setUsr_id(String usr_id) {
 		this.usr_id = usr_id;
 	}
-	
 	public String getUsr_name() {
 		return usr_name;
 	}
@@ -57,7 +60,42 @@ public class UsrVO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+	public String getUsr_pwd() {
+		return usr_pwd;
+	}
+	public void setUsr_pwd(String usr_pwd) {
+		this.usr_pwd = usr_pwd;
+	}
+	public String getUsr_brth() {
+		return usr_brth;
+	}
+	public void setUsr_brth(String usr_brth) {
+		this.usr_brth = usr_brth;
+	}
+	public String getUsr_phone() {
+		return usr_phone;
+	}
+	public void setUsr_phone(String usr_phone) {
+		this.usr_phone = usr_phone;
+	}
+	public String getUsr_addr() {
+		return usr_addr;
+	}
+	public void setUsr_addr(String usr_addr) {
+		this.usr_addr = usr_addr;
+	}
+	public String getUsr_levl() {
+		return usr_levl;
+	}
+	public void setUsr_levl(String usr_levl) {
+		this.usr_levl = usr_levl;
+	}
+	public String getCre_date() {
+		return cre_date;
+	}
+	public void setCre_date(String cre_date) {
+		this.cre_date = cre_date;
+	}
 	@Override
 	public String toString() {
 		return "UsrVO [usr_id=" + usr_id + ", usr_name=" + usr_name + "]";

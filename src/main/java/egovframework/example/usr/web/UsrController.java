@@ -107,7 +107,7 @@ public class UsrController {
 			alertMsg = "ID가 이미 존재합니다. 다른 ID를 사용해주세요.";
 		}
 		
-		resultMap.put("dubCheck", dupCheck);
+		resultMap.put("dupCheck", dupCheck);
 		resultMap.put("result", alertMsg);
 		
 		mv.addAllObjects(resultMap);
@@ -115,7 +115,26 @@ public class UsrController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 회원가입
+	 * @param UsrVO
+	 * @param 
+	 * @return int(result)
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/signUp.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView signUp(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int result = usrService.insertUsr(usrVO);
+		
+		resultMap.put("result", result);
+		
+		mv.addAllObjects(resultMap);
+		return mv;
+	}
 	
 	
 	

@@ -64,8 +64,25 @@ public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrServic
 		return usrMapper.selectUsrList(usrVO);
 	}
 
+	/**
+	 * ID중복체크
+	 * @param usrVO - usr_id
+	 * @return int
+	 * @exception Exception
+	 */
 	@Override
 	public int usrDupCheck(UsrVO usrVO) throws Exception {
 		return usrMapper.usrDupCheck(usrVO);
+	}
+
+	/**
+	 * 회원가입
+	 * @param usrVO
+	 * @return int
+	 * @exception Exception
+	 */
+	@Override
+	public int insertUsr(UsrVO usrVO) throws Exception {
+		return usrMapper.insertUsr(usrVO);
 	}
 }

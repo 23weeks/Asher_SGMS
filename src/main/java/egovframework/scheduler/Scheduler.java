@@ -25,7 +25,7 @@ public class Scheduler {
 	 * 프로젝트 구현 완료되면 주석 해제하고 아래 @Scheduled 삭제
 	 * @Scheduled(cron = "0 0 0 1 * ?")		//매월 1일 0시 0분 0초에 실행
 	 */
-	@Scheduled(fixedDelay = 600000)		//600초(10분)마다 실행
+	@Scheduled(fixedDelay = 6000000)		//600초(10분)마다 실행
 	public void monthlyStatisticsScheduler() {
 		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

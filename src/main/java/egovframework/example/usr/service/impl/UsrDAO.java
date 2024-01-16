@@ -56,4 +56,14 @@ public class UsrDAO extends EgovAbstractDAO {
 	int usrDupCheck(UsrVO usrVO) throws Exception {
 		return (int) select("usrDAO.usrDupCheck", usrVO);
 	}
+	
+	/**
+	 * 회원가입
+	 * @param usrVO
+	 * @return int
+	 * @exception Exception
+	 */
+	int insertUsr(UsrVO usrVO) throws Exception {
+		return (int) insert("usrDAO.insertUsr", usrVO);
+	}
 }

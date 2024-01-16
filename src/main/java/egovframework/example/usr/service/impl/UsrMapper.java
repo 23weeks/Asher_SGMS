@@ -54,4 +54,12 @@ public interface UsrMapper {
 	 */
 	int usrDupCheck(UsrVO usrVO) throws Exception;
 
+	/**
+	 * 회원가입
+	 * @param usrVO
+	 * @return int
+	 * @exception Exception
+	 */
+	int insertUsr(UsrVO usrVO) throws Exception;
+	
 }

@@ -41,10 +41,18 @@ public interface UsrService {
 	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
 
 	/**
-	 * 유저 목록 조회
-	 * @param usrVO
-	 * @return 유저 목록
+	 * ID 중복 체크
+	 * @param usrVO - usr_id
+	 * @return int
 	 * @exception Exception
 	 */
 	int usrDupCheck(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 회원가입
+	 * @param usrVO
+	 * @return int
+	 * @exception Exception
+	 */
+	int insertUsr(UsrVO usrVO) throws Exception;
 }

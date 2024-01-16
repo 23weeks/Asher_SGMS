@@ -7,15 +7,39 @@
 		<result property="usr_name"		column="usr_name"/>
 	</resultMap>
 	
+	<!-- ID 중복체크 -->
 	<select id="usrDupCheck" parameterType="usrVO" resultType="int">
 		SELECT COUNT(*)
 		  FROM SGMS_USR_LIST
 		 WHERE USR_ID = #{usr_id}
 	</select>
 	
+	<!-- 유저목록 -->
 	<select id="selectUsrList" parameterType="usrVO" resultType="usrVO">
 		SELECT *
 		  FROM SGMS_USR_LIST
 		 ORDER BY USR_LEVL, CRE_DATE DESC
 	</select>
+	
+	<insert id="insertUsr" parameterType="usrVO">
+		INSERT INTO SGMS_USR_LIST (
+									  USR_ID
+									, USR_PWD
+									, USR_NAME
+									, USR_BRTH
+									, USR_PHONE
+									, USR_ADDR
+									, USR_LEVL
+									, CRE_DATE
+								) VALUES (
+									  #{usr_id}
+									, #{usr_pwd}
+									, #{usr_name}
+									, #{usr_brth}
+									, #{usr_phone}
+									, #{usr_addr}
+									, '3'				<!-- default : 3(일반회원) -->
+									, NOW()
+										);
+	</insert>
 </mapper>

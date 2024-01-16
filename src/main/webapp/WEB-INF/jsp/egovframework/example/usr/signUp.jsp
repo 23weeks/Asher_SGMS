@@ -22,65 +22,123 @@ var dupCheck = false;
 function idDupCheck() {
 	var usr_id = $('#usr_id').val();
 	
-	$.ajax({
-		url : "<c:url value='/dupCheck.ajax'/>",
-		type : "post",
-		async : true,
-		data : {
-				"usr_id"	: usr_id
-		},
-		dataType : "json",
-		success : function(data) {
-			var result = data.result;
-			alert(result);
-			console.log(data)
-			if(data.dupCheck == 0){
-				dupCheck = true;
-			}else {
-				dupCheck = false;
+	//아이디 validation
+	if(usr_id == "" || usr_id.length < 5){
+		alert("아이디는 5글자 이상입니다.");
+		$('#usr_id').focus();
+	}else{
+		$.ajax({
+			url : "<c:url value='/dupCheck.ajax'/>",
+			type : "post",
+			async : false,
+			data : {
+					"usr_id"	: usr_id
+			},
+			dataType : "json",
+			success : function(data) {
+				var result = data.result;
+				alert(result);
+				if(data.dupCheck == 0){
+					dupCheck = true;
+				}else {
+					dupCheck = false;
+				}
+			},
+			error : function(request, status, error) {
 			}
-		},
-		error : function(request, status, error) {
-		}
-	});
+		});
+	}
 }
 
-//ID 중복체크
+//회원가입
 function signUp() {
 	var usr_id = $('#usr_id').val();
 	var usr_name = $('#usr_name').val();
-	var usr_password = $('#usr_password').val();
+	var usr_pwd = $('#usr_pwd').val();
 	var usr_brth = $('#usr_brth').val();
 	var usr_phone = $('#usr_phone').val();
-	alert(usr_phone);
+	var replace_usr_phone = "";
+	if(usr_phone.includes('-')){
+		replace_usr_phone = usr_phone.replace(/-/g, '');
+	}else{
+		replace_usr_phone = usr_phone;
+	}
 	var usr_addr = $('#usr_addr').val();
 	
-	$.ajax({
-		url : "<c:url value='/signUp.ajax'/>",
-		type : "post",
-		async : true,
-		data : {
-				"usr_id"		: usr_id,
-				"usr_name"		: usr_name,
-				"usr_password"	: usr_password,
-				"usr_brth"		: usr_brth,
-				"usr_phone"		: usr_phone,
-				"usr_addr"		: usr_addr
-		},
-		dataType : "json",
-		success : function(data) {
-			var result = data.result;
-			alert(result);
-			console.log(data)
-			if(data.dupCheck == 0){
-				dupCheck = true;
-			}else {
-				dupCheck = false;
-			}
-		},
-		error : function(request, status, error) {
+	if(validationCheck()){
+		if(dupCheck == true){
+			$.ajax({
+				url : "<c:url value='/signUp.ajax'/>",
+				type : "post",
+				async : true,
+				data : {
+						"usr_id"		: usr_id,
+						"usr_name"		: usr_name,
+						"usr_pwd"		: usr_pwd,
+						"usr_brth"		: usr_brth,
+						"usr_phone"		: replace_usr_phone,
+						"usr_addr"		: usr_addr
+				},
+				dataType : "json",
+				success : function(data) {
+					alert("회원가입이 완료되었습니다.\n로그인페이지로 이동합니다.");
+					window.location.href = "<c:url value='/login.do'/>";
+				},
+				error : function(request, status, error) {
+				}
+			});
+		}else {
+			alert("중복체크를 해주세요.");
 		}
-	});
+	}
+}
+
+//벨리데이션 확인
+function validationCheck() {
+	var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;		//usr_pwd 유효성검사(영문, 숫자, 특수문자)
+	var birthdateRegex = /^\d{6}$/;															//usr_brth 유효성검사(숫자 6자리)
+	var phoneRegex = /^01[0-9]-\d{4}-\d{4}$/;												//usr_phone 유효성검사
+	var usr_pwd = $('#usr_pwd').val();
+	var usr_brth = $('#usr_brth').val();
+	var usr_phone = $('#usr_phone').val();
+	
+	//이름
+	if($('#usr_name').val() == ""){
+		alert("이름을 입력해주세요.");
+		$('#usr_name').focus();
+		return false;
+	}
+	//비밀번호
+	if(!passwordRegex.test(usr_pwd)){
+		alert("비밀번호는 영문, 숫자, 특수문자를 포함한 8글자 이상이어야 합니다.");
+		$('#usr_pwd').focus();
+		return false;
+	}
+	//비밀번호확인
+	if($('#usr_pwd').val() != $('#usr_pwd_chk').val()){
+		alert("비밀번호와 비밀번호확인이 일치되야합니다.");
+		$('#usr_pwd_chk').focus();
+		return false;
+	}
+	//생년월일
+	if(!birthdateRegex.test(usr_brth)){
+		alert("생년월일은 숫자 6자리여야 합니다.");
+		$('#usr_brth').focus();
+		return false;
+	}
+	//전화번호
+	if(!phoneRegex.test(usr_phone)){
+		alert("휴대폰 번호는 '010-1234-5678'의 형식을 따라야 합니다.");
+		$('#usr_phone').focus();
+		return false;
+	}
+	//주소
+	if($('#usr_addr').val() == ""){
+		alert("주소를 입력해주세요.");
+		$('#usr_addr').focus();
+		return false;
+	}
+	return true;
 }
 </script>
 
@@ -133,13 +191,13 @@ function signUp() {
 			<tr>
 				<th style="text-align: left">비밀번호</th>
 				<td>
-					<input  id="usr_password" style="width: 290px"></input>
+					<input  id="usr_pwd" style="width: 290px" type="password"></input>
 				</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">비밀번호 확인</th>
 				<td>
-					<input  id="usr_password_chk" style="width: 290px"></input>
+					<input  id="usr_pwd_chk" style="width: 290px" type="password"></input>
 				</td>
 			</tr>
 			<tr>
@@ -151,7 +209,7 @@ function signUp() {
 			<tr>
 				<th style="text-align: left">휴대폰번호</th>
 				<td>
-					<input  id="usr_phone" style="width: 290px" type="tel" placeholder="010-1234-5678" required></input>
+					<input id="usr_phone" style="width: 290px" type="tel" placeholder="010-1234-5678" required></input>
 				</td>
 			</tr>
 			<tr>
