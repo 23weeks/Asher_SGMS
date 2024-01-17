@@ -15,38 +15,6 @@
 
 <script type="text/javaScript" language="javascript" defer="defer">
 
-//ID 중복체크
-function idDupCheck() {
-	var usr_id = $('#usr_id').val();
-	
-	//아이디 validation
-	if(usr_id == "" || usr_id.length < 5){
-		alert("아이디는 5글자 이상입니다.");
-		$('#usr_id').focus();
-	}else{
-		getSessionValue();
-		$.ajax({
-			url : "<c:url value='/dupCheck.ajax'/>",
-			type : "post",
-			async : false,
-			data : {
-					"usr_id"	: usr_id
-			},
-			dataType : "json",
-			success : function(data) {
-				var result = data.result;
-				alert(result);
-				if(data.dupCheck == 0){
-					dupCheck = true;
-				}else {
-					dupCheck = false;
-				}
-			},
-			error : function(request, status, error) {
-			}
-		});
-	}
-}
 
 </script>
 </head>
