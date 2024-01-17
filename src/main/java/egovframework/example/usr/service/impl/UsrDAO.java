@@ -66,4 +66,14 @@ public class UsrDAO extends EgovAbstractDAO {
 	int insertUsr(UsrVO usrVO) throws Exception {
 		return (int) insert("usrDAO.insertUsr", usrVO);
 	}
+	
+	/**
+	 * 로그인
+	 * @param usrVO - usr_id, usr_pwd
+	 * @return UsrVO
+	 * @exception Exception
+	 */
+	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception {
+		return (UsrVO) select("usrDAO.loginUsrInfo" , usrVO);
+	}
 }

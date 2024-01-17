@@ -62,4 +62,11 @@ public interface UsrMapper {
 	 */
 	int insertUsr(UsrVO usrVO) throws Exception;
 	
+	/**
+	 * 로그인
+	 * @param usrVO - usr_id, usr_pwd
+	 * @return usrVO
+	 * @exception Exception
+	 */
+	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception;
 }

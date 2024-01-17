@@ -21,6 +21,7 @@
 		 ORDER BY USR_LEVL, CRE_DATE DESC
 	</select>
 	
+	<!-- 회원가입 -->
 	<insert id="insertUsr" parameterType="usrVO">
 		INSERT INTO SGMS_USR_LIST (
 									  USR_ID
@@ -42,4 +43,16 @@
 									, NOW()
 										);
 	</insert>
+	
+	<select id="loginUsrInfo" parameterType="usrVO" resultType="usrVO">
+		SELECT
+			  USR_ID
+			, USR_PWD
+			, USR_NAME
+			, USR_LEVL
+		  FROM SGMS_USR_LIST 
+		 WHERE USR_ID = #{usr_id}
+		   AND USR_PWD = #{usr_pwd}
+			  
+	</select>
 </mapper>

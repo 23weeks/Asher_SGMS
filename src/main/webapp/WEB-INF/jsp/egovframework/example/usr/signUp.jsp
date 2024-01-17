@@ -10,7 +10,7 @@
 	<title>회원가입</title>
 	<link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/sample.css'/>"/>
 
-
+<script type="text/javascript" src="<c:url value="/js/common.js"/>"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javaScript" language="javascript" defer="defer">
@@ -93,6 +93,11 @@ function signUp() {
 	}
 }
 
+//취소 버튼
+function cancel() {
+	window.location.href = "<c:url value='/login.do'/>";
+}
+
 //벨리데이션 확인
 function validationCheck() {
 	var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;		//usr_pwd 유효성검사(영문, 숫자, 특수문자)
@@ -141,90 +146,64 @@ function validationCheck() {
 	return true;
 }
 </script>
-
-<style>
-	body {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100vh;
-		margin: 0;
-	}
-	
-	.content {
-		text-align: center;
-	}
-	
-	th, td {
-		border: 1px solid #ddd;
-		padding: 8px;
-		text-align: left;
-	}
-	
-	a:hover {
-		font-size:12px;
-		font-family:"돋움";
-		color:#339999;
-		text-decoration:none;
-		cursor: pointer;		 /* 마우스 모양을 손가락으로 변경 */
-		}
-</style>
 </head>
 <body>
-	<div class="content">
-	<h1>회원가입</h1>
-	<br/>
-		<table>
-			<tr>
-				<th style="text-align: left">아이디</th>
-				<td>
-					<input id="usr_id" style="width: 200px; padding-right: 20px"></input>
-					<a style="width: 70px; background-color: rgb(200, 200, 200); font-size: 14px; margin-left: 5px" onclick="idDupCheck()">중복확인</a>
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align: left">성명</th>
-				<td>
-					<input  id="usr_name" style="width: 290px"></input>
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align: left">비밀번호</th>
-				<td>
-					<input  id="usr_pwd" style="width: 290px" type="password"></input>
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align: left">비밀번호 확인</th>
-				<td>
-					<input  id="usr_pwd_chk" style="width: 290px" type="password"></input>
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align: left">생년월일</th>
-				<td>
-					<input  id="usr_brth" style="width: 290px"></input>
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align: left">휴대폰번호</th>
-				<td>
-					<input id="usr_phone" style="width: 290px" type="tel" placeholder="010-1234-5678" required></input>
-				</td>
-			</tr>
-			<tr>
-				<th style="text-align: left">주소</th>
-				<td>
-					<input  id="usr_addr" style="width: 290px"></input>
-				</td>
-			</tr>
-		</table>
-		<div style="text-align: center; padding-top: 50px">
-			<a onclick="signUp()">회원가입</a>
+	<div class="main-content" style="margin-top: 150px">
+		<div style="text-align: center">
+			<h1>회원가입</h1>
+		</div>
+		<div>
+			<table style="margin: 20px auto">
+				<tr>
+					<th style="text-align: left">아이디</th>
+					<td>
+						<input id="usr_id" style="width: 200px; padding-right: 20px"></input>
+						<a style="width: 70px; background-color: rgb(200, 200, 200); font-size: 14px; margin-left: 5px" onclick="idDupCheck()">중복확인</a>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: left">성명</th>
+					<td>
+						<input  id="usr_name" style="width: 290px"></input>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: left">비밀번호</th>
+					<td>
+						<input  id="usr_pwd" style="width: 290px" type="password"></input>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: left">비밀번호 확인</th>
+					<td>
+						<input  id="usr_pwd_chk" style="width: 290px" type="password"></input>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: left">생년월일</th>
+					<td>
+						<input  id="usr_brth" style="width: 290px"></input>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: left">휴대폰번호</th>
+					<td>
+						<input id="usr_phone" style="width: 290px" type="tel" placeholder="010-1234-5678" required></input>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: left">주소</th>
+					<td>
+						<input  id="usr_addr" style="width: 290px"></input>
+					</td>
+				</tr>
+			</table>
+		</div>	
+		<div style="text-align: center; padding-top: 20px">
+			<a onclick="cancel()">취소</a>
+			<a onclick="signUp()" style="margin-left: 100px">회원가입</a>
 		</div>
 	</div>
-	
-	
-	
 </body>
+<%@include file ="../semantic/footer.jsp" %>
 </html>

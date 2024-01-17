@@ -85,4 +85,15 @@ public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrServic
 	public int insertUsr(UsrVO usrVO) throws Exception {
 		return usrMapper.insertUsr(usrVO);
 	}
+
+	/**
+	 * 로그인
+	 * @param usrVO - usr_id, usr_pwd
+	 * @return usrVO
+	 * @exception Exception
+	 */
+	@Override
+	public UsrVO loginUsrInfo(UsrVO usrVO) throws Exception {
+		return usrMapper.loginUsrInfo(usrVO);
+	}
 }

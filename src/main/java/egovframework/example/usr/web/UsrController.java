@@ -16,10 +16,11 @@
 package egovframework.example.usr.web;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
@@ -86,6 +89,18 @@ public class UsrController {
 	}
 	
 	/**
+	 * ID/비밀번호 찾기
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/find.do")
+	public String find() throws Exception {
+		return "usr/find";
+	}
+	
+	/**
 	 * ID중복체크
 	 * @param UsrVO - usr_id
 	 * @param 
@@ -136,34 +151,55 @@ public class UsrController {
 		return mv;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/* ajax 테스트용 */
+	/**
+	 * 로그인
+	 * @param UsrVO
+	 * @param 
+	 * @return int(result)
+	 * @exception Exception
+	 */
 	@ResponseBody
-	@RequestMapping(path = "/test.ajax", method=RequestMethod.POST, produces="application/json")
-	public ModelAndView test(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
-		
+	@RequestMapping(path = "/login.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView login(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("jsonView");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		List<UsrVO> list = usrService.selectUsrList(usrVO);
+		String errMsg = "";
+		UsrVO result = usrService.loginUsrInfo(usrVO);
 		
-		resultMap.put("resultList", list);
+		if(result != null) {
+			session.setAttribute("usr_id", usrVO.getUsr_id());
+		}else {
+			errMsg = "일치하는 ID와 비밀번호가 없습니다.\nID와 비밀번호를 확인해주세요.";
+		}
+		
+		resultMap.put("result", result);
+		resultMap.put("errMsg", errMsg);
+		
 		mv.addAllObjects(resultMap);
-		
 		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 로그아웃
+	 * @param
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value="/logout.do")
+	public String logout(HttpServletRequest request) {
+		RequestContextHolder.getRequestAttributes().removeAttribute("usr_id", RequestAttributes.SCOPE_SESSION);
+		request.getSession().invalidate();
+		return "usr/indexPage";
 	}
 }
