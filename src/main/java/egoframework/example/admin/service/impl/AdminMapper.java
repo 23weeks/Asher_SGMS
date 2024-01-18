@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.usr.service.impl;
+package egoframework.example.admin.service.impl;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
  * </pre>
  */
 @Mapper("usrMapper")
-public interface UsrMapper {
+public interface AdminMapper {
 
 	/**
 	 * 유저 목록 조회

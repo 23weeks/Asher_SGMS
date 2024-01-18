@@ -39,8 +39,8 @@ public class UsrDAO extends EgovAbstractDAO {
 
 	/**
 	 * 유저 목록 조회
-	 * @param usrVO
-	 * @return 유저 목록
+	 * @param
+	 * @return List<usrVO>
 	 * @exception Exception
 	 */
 	List<?> selectUsrList(UsrVO usrVO) throws Exception {

@@ -139,7 +139,7 @@ public class UsrController {
 	
 	/**
 	 * ID중복체크
-	 * @param UsrVO - usr_id
+	 * @param AdminVO - usr_id
 	 * @param 
 	 * @return int(result)
 	 * @exception Exception
@@ -169,7 +169,7 @@ public class UsrController {
 	
 	/**
 	 * 회원가입
-	 * @param UsrVO
+	 * @param AdminVO
 	 * @param 
 	 * @return int(result)
 	 * @exception Exception
@@ -190,7 +190,7 @@ public class UsrController {
 	
 	/**
 	 * 로그인
-	 * @param UsrVO
+	 * @param AdminVO
 	 * @param 
 	 * @return int(result)
 	 * @exception Exception
@@ -298,8 +298,26 @@ public class UsrController {
 		return mv;
 	}
 	
-	
-	
+	/**
+	 * 회원 목록
+	 * @param 
+	 * @param 
+	 * @return List<usrVO>
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/signUp.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView selectUsrList(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int result = usrService.insertUsr(usrVO);
+		
+		resultMap.put("result", result);
+		
+		mv.addAllObjects(resultMap);
+		return mv;
+	}
 	
 	/**
 	 * 로그아웃

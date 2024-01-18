@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 MOPAS(Ministry of Public Administration and Security).
+ * Copyright 2008-2009 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.usr.service.impl;
+package egoframework.example.admin.service.impl;
 
 import java.util.List;
 
 import egovframework.example.usr.vo.UsrVO;
-import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
+
+import org.springframework.stereotype.Repository;
 
 /**
- * usr에 관한 데이터처리 매퍼 클래스
+ * @Class Name : UsrDAO.java
+ * @Description : Usr DAO Class
+ * @Modification Information
+ * @
+ * @  수정일      수정자              수정내용
+ * @ ---------   ---------   -------------------------------
+ * @ 2024.01.12           최초생성
  *
- * @author  SJLEE
- * @since 2024.01.11
- * @version 1.0
- * @see <pre>
- *  == 개정이력(Modification Information) ==
- *
- *          수정일          수정자           수정내용
- *  ----------------    ------------    ---------------------------
- *   2024.01.11          최초 생성
- *
- * </pre>
+ * @author SJLEE
  */
-@Mapper("usrMapper")
-public interface UsrMapper {
+
+@Repository("UsrDAO")
+public class AdminDAO extends EgovAbstractDAO {
 
 	/**
 	 * 유저 목록 조회
@@ -44,31 +43,39 @@ public interface UsrMapper {
 	 * @return List<usrVO>
 	 * @exception Exception
 	 */
-	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
-	
+	List<?> selectUsrList(UsrVO usrVO) throws Exception {
+		return list("usrDAO.selectUsrList", usrVO);
+	}
+
 	/**
 	 * ID 중복 체크
 	 * @param usrVO - usr_id
 	 * @return int
 	 * @exception Exception
 	 */
-	int usrDupCheck(UsrVO usrVO) throws Exception;
-
+	int usrDupCheck(UsrVO usrVO) throws Exception {
+		return (int) select("usrDAO.usrDupCheck", usrVO);
+	}
+	
 	/**
 	 * 회원가입
 	 * @param usrVO
 	 * @return int
 	 * @exception Exception
 	 */
-	int insertUsr(UsrVO usrVO) throws Exception;
+	int insertUsr(UsrVO usrVO) throws Exception {
+		return (int) insert("usrDAO.insertUsr", usrVO);
+	}
 	
 	/**
 	 * 로그인
 	 * @param usrVO - usr_id, usr_pwd
-	 * @return usrVO
+	 * @return UsrVO
 	 * @exception Exception
 	 */
-	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception;
+	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception {
+		return (UsrVO) select("usrDAO.loginUsrInfo" , usrVO);
+	}
 	
 	/**
 	 * ID찾기
@@ -76,8 +83,9 @@ public interface UsrMapper {
 	 * @return usrVO
 	 * @exception Exception
 	 */
-	UsrVO findId(UsrVO usrVO) throws Exception;
-	
+	UsrVO findId(UsrVO usrVO) throws Exception {
+		return (UsrVO) select("usrDAO.findId" , usrVO);
+	}
 	
 	/**
 	 * 비밀번호 찾기
@@ -85,5 +93,7 @@ public interface UsrMapper {
 	 * @return usrVO
 	 * @exception Exception
 	 */
-	UsrVO findPwd(UsrVO usrVO) throws Exception;
+	UsrVO findPwd(UsrVO usrVO) throws Exception {
+		return (UsrVO) select("usrDAO.findPwd", usrVO);
+	}
 }

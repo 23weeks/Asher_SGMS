@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 MOPAS(Ministry of Public Administration and Security).
+ * Copyright 2008-2009 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,39 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.usr.service.impl;
+package egovframework.example.admin.service;
 
 import java.util.List;
 
 import egovframework.example.usr.vo.UsrVO;
-import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 /**
- * usr에 관한 데이터처리 매퍼 클래스
+ * @Class Name : UsrService.java
+ * @Description : UsrService Class
+ * @Modification Information
+ * @
+ * @  수정일      수정자              수정내용
+ * @ ---------   ---------   -------------------------------
+ * @ 2024.01.11           최초생성
  *
- * @author  SJLEE
- * @since 2024.01.11
- * @version 1.0
- * @see <pre>
- *  == 개정이력(Modification Information) ==
- *
- *          수정일          수정자           수정내용
- *  ----------------    ------------    ---------------------------
- *   2024.01.11          최초 생성
- *
- * </pre>
+ * @author SJLEE
  */
-@Mapper("usrMapper")
-public interface UsrMapper {
+public interface AdminService {
 
 	/**
 	 * 유저 목록 조회
-	 * @param
+	 * @param 
 	 * @return List<usrVO>
 	 * @exception Exception
 	 */
 	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
-	
+
 	/**
 	 * ID 중복 체크
 	 * @param usrVO - usr_id
@@ -53,7 +47,7 @@ public interface UsrMapper {
 	 * @exception Exception
 	 */
 	int usrDupCheck(UsrVO usrVO) throws Exception;
-
+	
 	/**
 	 * 회원가입
 	 * @param usrVO
@@ -77,7 +71,6 @@ public interface UsrMapper {
 	 * @exception Exception
 	 */
 	UsrVO findId(UsrVO usrVO) throws Exception;
-	
 	
 	/**
 	 * 비밀번호 찾기

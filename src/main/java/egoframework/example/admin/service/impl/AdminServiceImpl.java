@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.usr.service.impl;
+package egoframework.example.admin.service.impl;
 
 import java.util.List;
 
@@ -40,14 +40,14 @@ import egovframework.rte.fdl.idgnr.EgovIdGnrService;
  */
 
 @Service("usrService")
-public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrService {
+public class AdminServiceImpl extends EgovAbstractServiceImpl implements UsrService {
 
 	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory.getLogger(UsrServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
 	// TODO mybatis 사용
 	@Resource(name = "usrMapper")
-	private UsrMapper usrMapper;
+	private AdminMapper usrMapper;
 
 	/** ID Generation */
 	@Resource(name = "egovIdGnrService")
