@@ -15,11 +15,8 @@
  */
 package egovframework.example.cmmn.web;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @Class Name : CmmnController.java
@@ -43,9 +40,9 @@ public class CmmnController {
 	 * @return 
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/mainPage.do")
+	@RequestMapping(value = "/adminPage.do")
 	public String mainPage() throws Exception {
-		return "usr/indexPage";
+		return "admin/adminPage";
 	}
 	
 	/**

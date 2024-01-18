@@ -15,21 +15,6 @@
 
 <script type="text/javaScript" language="javascript" defer="defer">
 
-function mainPage() {
-	$.ajax({
-		url : "<c:url value='/mainPage.do'/>",
-		type : "post",
-		async : false,
-		dataType : "json",
-		success : function(data) {	
-			var result = data.result;
-			
-		},
-		error : function(request, status, error) {
-		}
-	});
-}
-
 function logout() {
 	if(confirm("로그아웃하시겠습니까?")){
 		window.location.href = "<c:url value='/logout.do'/>";
@@ -62,10 +47,13 @@ $(document).ready(function(){
 </head>
 <body>
 	<div class="header">
-		<div class="links" style="height: 30px">
-		<a onclick="mainPage()" style="float: left">SGMS(메인페이지로 이동)</a>
-		<a onclick="logout()" style="float: right">로그아웃</a>
-	</div>
+		<div class="links" style="height: 30px; width: 100%; margin-top: 10px">
+			<div style="width: 50%">
+			</div>
+			<div style="width: 50%">
+				<a onclick="logout()" style="font-family:돋움; right: 50px; font-weight: bold;">로그아웃</a>
+			</div>
+		</div>
 	</div>
 	
 </body>

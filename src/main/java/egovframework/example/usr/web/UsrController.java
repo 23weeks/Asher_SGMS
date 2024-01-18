@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -309,8 +310,9 @@ public class UsrController {
 	 */
 	@RequestMapping(value="/logout.do")
 	public String logout(HttpServletRequest request) {
+		System.out.println(request.getSession().getAttribute("usr_id"));
 		RequestContextHolder.getRequestAttributes().removeAttribute("usr_id", RequestAttributes.SCOPE_SESSION);
 		request.getSession().invalidate();
-		return "usr/indexPage";
+		return "redirect:/login.do";
 	}
 }

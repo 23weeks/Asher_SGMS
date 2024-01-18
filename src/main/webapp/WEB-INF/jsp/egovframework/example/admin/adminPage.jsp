@@ -15,15 +15,6 @@
 
 <script type="text/javaScript" language="javascript" defer="defer">
 
-$(document).ready(function() {
-	/* enterKey action */
-	$('#main').keypress(function(event) {
-		if (event.which === 13) {
-			login();
-		}
-	});
-});
-
 /* 회원가입 */
 function signUp() {
 	window.location.href = "<c:url value='/signUp.do'/>";
@@ -49,17 +40,6 @@ function login() {
 			},
 			dataType : "json",
 			success : function(data) {
-				var result = data.result;
-				console.log(result);
-				if(data.errMsg != ""){
-					alert(data.errMsg);
-				}else if(result.usr_levl == '1') {
-					alert('관리자페이지 이동');
-					window.location.href = "<c:url value='/adminPage.do'/>";
-				}else {
-					alert('일반회원페이지 이동');
-					window.location.href = "<c:url value='/usrPage.do'/>";
-				}
 			},
 			error : function(request, status, error) {
 			}
@@ -90,37 +70,72 @@ function find() {
 	popupWindow.moveTo(leftPosition, topPosition);
 }
 </script>
+<style >
+	.leftDiv {
+		width: 14%;
+		float: left;
+		margin-left: 50px;
+		text-align: right;
+		flex-direction: column;
+		padding: 10px;
+		background-color: #f5f5f5;
+	}
+	
+	.rightDiv {
+		width: 80%;
+		float: right;
+		background-color: #f5f5f5;
+		height: 720px;
+		padding: 10px;
+	}
+	
+	.leftDiv div {
+		margin: 0 0 15px 0;
+		box-sizing: border-box;
+	}
+	
+	.leftDiv button {
+		font-family: Roboto;
+		font-size:20px;
+		color:black;
+		text-decoration:none;
+		border: 1px solid #333;
+		width: 100%;
+		height: 60px;
+		font-weight: bold;
+	}
+	
+	.leftDiv button:hover {
+		cursor: pointer;		 /* 마우스 모양을 손가락으로 변경 */
+		background-color: #f0f0f0;
+	}
+</style>
+<%@include file ="../semantic/header.jsp" %>
 </head>
-
 <body>
-	<div class="main-content" style="text-align: center">
-		<div style="margin-top: 250px">
-			<h1>Study Group Management System</h1>
+	<div class="main-content">
+		<div class="leftDiv">
+			<div>
+				<button type="button">회원관리</button>
+			</div>
+			<div>
+				<button type="button">스터디 목록 관리</button>
+			</div>
+			<div>
+				<button type="button">통계 조회</button>
+			</div>
 		</div>
-		<div>
-			<table id="main" style="margin: 20px auto">
+		<div class="rightDiv">
+			<table>
 				<tr>
-					<th style="text-align: center">
-						아이디
-					</th>
-					<td>
-						<input id="usr_id" style="width: 290px"></input>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align: center">
-						비밀번호
-					</th>
-					<td>
-						<input  id="usr_pwd" style="width: 290px" type="password"></input>
-					</td>
+					<th>1</th>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
 				</tr>
 			</table>
-		</div>
-		<div class="btnContainer">
-			<a id="signUpBtn" onclick="signUp()" style="padding-right: 100px">회원가입</a>
-			<a id="loginBtn"  onclick="login()"  style="padding-right: 100px">로그인</a>
-			<a id="findBtn"   onclick="find()">아이디/비밀번호 찾기</a>
 		</div>
 	</div>
 </body>

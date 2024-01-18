@@ -35,7 +35,6 @@
     		<mvc:mapping path="/**/*.do"/>
     		<mvc:exclude-mapping path="/signUp.do"/>
     		<mvc:exclude-mapping path="/login.do"/>
-    		<mvc:exclude-mapping path="/logout.do"/>
     		<mvc:exclude-mapping path="/find*.do"/>
     		<!-- <mvc:exclude-mapping path="/find.do"/> -->
     		<bean id="Interceptor" class="egovframework.example.cmmn.Interceptor"/>

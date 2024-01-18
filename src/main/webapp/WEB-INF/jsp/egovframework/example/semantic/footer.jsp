@@ -36,7 +36,7 @@
 	.header {
 		background-color: #333;
 		color: white;
-		padding: 15px;
+		padding: 10px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -49,11 +49,15 @@
 		text-align: center;
 		margin-top: auto; /* 중요: 자동으로 나머지 공간을 차지하게 함 */
 	}
+	.links {
+		position: relative;
+	}
 	
 	.links a {
 		color: white;
 		text-decoration: none;
-		font-size: 12px;
+		font-size: 14px;
+		position: absolute;
 	}
 	
 	th, td {
