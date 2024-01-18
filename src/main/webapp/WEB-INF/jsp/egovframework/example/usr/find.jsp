@@ -15,6 +15,15 @@
 
 <script type="text/javaScript" language="javascript" defer="defer">
 
+/* 아이디 찾기 */
+function findId() {
+	window.location.href = "<c:url value='/findId.do'/>";
+}
+
+/* 비밀번호 찾기 */
+function findPwd() {
+	window.location.href = "<c:url value='/findPwd.do'/>";
+}
 
 </script>
 </head>
@@ -24,10 +33,10 @@
 			<h1>SGMS</h1>	
 		</div>
 		<div style="text-align: center; margin-bottom: 20px">
-			<a style="width: 70px; font-size: 14px; margin-left: 5px" onclick="">아이디 찾기</a><br/>
+			<a style="width: 70px; font-size: 14px; margin-left: 5px" onclick="findId()">아이디 찾기</a><br/>
 		</div>
 		<div style="text-align: center">
-			<a style="width: 70px; font-size: 14px; margin-left: 5px" onclick="">비밀번호 찾기</a>
+			<a style="width: 70px; font-size: 14px; margin-left: 5px" onclick="findPwd()">비밀번호 찾기</a>
 		</div>
 	</div>
 </body>

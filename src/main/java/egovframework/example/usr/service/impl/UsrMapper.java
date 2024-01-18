@@ -69,4 +69,21 @@ public interface UsrMapper {
 	 * @exception Exception
 	 */
 	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * ID찾기
+	 * @param usrVO - usr_name, usr_brth, usr_phone
+	 * @return usrVO
+	 * @exception Exception
+	 */
+	UsrVO findId(UsrVO usrVO) throws Exception;
+	
+	
+	/**
+	 * 비밀번호 찾기
+	 * @param usrVO - usr_id, usr_name, usr_brth, usr_phone
+	 * @return usrVO
+	 * @exception Exception
+	 */
+	UsrVO findPwd(UsrVO usrVO) throws Exception;
 }

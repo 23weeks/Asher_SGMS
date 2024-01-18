@@ -15,6 +15,15 @@
 
 <script type="text/javaScript" language="javascript" defer="defer">
 
+$(document).ready(function() {
+	/* enterKey action */
+	$('#main').keypress(function(event) {
+		if (event.which === 13) {
+			signUp();
+		}
+	});
+});
+
 //중복체크(default: false)
 var dupCheck = false;
 
@@ -153,7 +162,7 @@ function validationCheck() {
 			<h1>회원가입</h1>
 		</div>
 		<div>
-			<table style="margin: 20px auto">
+			<table id="main" style="margin: 20px auto">
 				<tr>
 					<th style="text-align: left">아이디</th>
 					<td>
@@ -162,7 +171,7 @@ function validationCheck() {
 					</td>
 				</tr>
 				<tr>
-					<th style="text-align: left">성명</th>
+					<th style="text-align: left">이름</th>
 					<td>
 						<input  id="usr_name" style="width: 290px"></input>
 					</td>

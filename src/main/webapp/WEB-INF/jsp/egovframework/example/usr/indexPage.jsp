@@ -15,6 +15,15 @@
 
 <script type="text/javaScript" language="javascript" defer="defer">
 
+$(document).ready(function() {
+	/* enterKey action */
+	$('#main').keypress(function(event) {
+		if (event.which === 13) {
+			login();
+		}
+	});
+});
+
 /* 회원가입 */
 function signUp() {
 	window.location.href = "<c:url value='/signUp.do'/>";
@@ -88,7 +97,7 @@ function find() {
 			<h1>Study Group Management System</h1>
 		</div>
 		<div>
-			<table style="margin: 20px auto">
+			<table id="main" style="margin: 20px auto">
 				<tr>
 					<th style="text-align: center">
 						아이디
@@ -107,10 +116,10 @@ function find() {
 				</tr>
 			</table>
 		</div>
-		<div>
-			<a onclick="signUp()" style="padding-right: 100px">회원가입</a>
-			<a onclick="login()"  style="padding-right: 100px">로그인</a>
-			<a onclick="find()">아이디/비밀번호 찾기</a>
+		<div class="btnContainer">
+			<a id="signUpBtn" onclick="signUp()" style="padding-right: 100px">회원가입</a>
+			<a id="loginBtn"  onclick="login()"  style="padding-right: 100px">로그인</a>
+			<a id="findBtn"   onclick="find()">아이디/비밀번호 찾기</a>
 		</div>
 	</div>
 </body>

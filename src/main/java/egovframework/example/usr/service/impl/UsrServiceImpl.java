@@ -96,4 +96,26 @@ public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrServic
 	public UsrVO loginUsrInfo(UsrVO usrVO) throws Exception {
 		return usrMapper.loginUsrInfo(usrVO);
 	}
+
+	/**
+	 * ID찾기
+	 * @param usrVO - usr_name, usr_brth, usr_phone
+	 * @return usrVO
+	 * @exception Exception
+	 */
+	@Override
+	public UsrVO findId(UsrVO usrVO) throws Exception {
+		return usrMapper.findId(usrVO);
+	}
+
+	/**
+	 * 비밀번호 찾기
+	 * @param usrVO - usr_id, usr_name, usr_brth, usr_phone
+	 * @return usrVO
+	 * @exception Exception
+	 */
+	@Override
+	public UsrVO findPwd(UsrVO usrVO) throws Exception {
+		return usrMapper.findPwd(usrVO);
+	}
 }

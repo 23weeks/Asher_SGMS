@@ -101,6 +101,42 @@ public class UsrController {
 	}
 	
 	/**
+	 * 아이디찾기
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/findId.do")
+	public String findId() throws Exception {
+		return "usr/findId";
+	}
+	
+	/**
+	 * 비밀번호찾기
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/findPwd.do")
+	public String findPwd() throws Exception {
+		return "usr/findPwd";
+	}
+	
+	/**
+	 * 비밀번호찾기
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/findPwdSecond.do")
+	public String findPwdSecond() throws Exception {
+		return "usr/findPwdSecond";
+	}
+	
+	/**
 	 * ID중복체크
 	 * @param UsrVO - usr_id
 	 * @param 
@@ -180,11 +216,86 @@ public class UsrController {
 		return mv;
 	}
 	
+	/**
+	 * 아이디찾기
+	 * @param usrVO - usr_name, usr_brth, usr_phone
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/findId.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView findId(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String errMsg = "";
+		UsrVO result = usrService.findId(usrVO);
+		
+		if(result == null) {
+			errMsg = "일치하는 정보가 없습니다.";
+		}
+		
+		resultMap.put("result", result);
+		resultMap.put("errMsg", errMsg);
+		
+		mv.addAllObjects(resultMap);
+		return mv;
+	}
 	
+	/**
+	 * 비밀번호 찾기(1단계)
+	 * @param usrVO - usr_id
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/findPwdFirst.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView findPwdFirst(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String errMsg = "";
+		int result = usrService.usrDupCheck(usrVO);
+		
+		if(result == 0) {
+			errMsg = "일치하는 정보가 없습니다.";
+		}
+		
+		resultMap.put("result", result);
+		resultMap.put("errMsg", errMsg);
+		
+		mv.addAllObjects(resultMap);
+		return mv;
+	}
 	
-	
-	
-	
+	/**
+	 * 비밀번호 찾기(2단계)
+	 * @param usrVO - usr_id
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/findPwdSecond.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView findPwdSecond(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String errMsg = "";
+		UsrVO result = usrService.findPwd(usrVO);
+		
+		if(result == null) {
+			errMsg = "입력한 정보가 일치하지 않습니다.";
+		}
+		
+		resultMap.put("result", result);
+		resultMap.put("errMsg", errMsg);
+		
+		mv.addAllObjects(resultMap);
+		return mv;
+	}
 	
 	
 	
