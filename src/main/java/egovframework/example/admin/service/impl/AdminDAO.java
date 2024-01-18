@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egoframework.example.admin.service.impl;
+package egovframework.example.admin.service.impl;
 
 import java.util.List;
 
