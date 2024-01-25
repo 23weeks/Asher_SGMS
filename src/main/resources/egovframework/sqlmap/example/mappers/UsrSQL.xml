@@ -39,7 +39,7 @@
 									, #{usr_addr}
 									, '3'				<!-- default : 3(일반회원) -->
 									, NOW()
-										);
+										)
 	</insert>
 	
 	<!-- 로그인 -->
@@ -76,17 +76,4 @@
 		   AND USR_PHONE = #{usr_phone}
 	</select>
 	
-	<!-- 유저목록 -->
-	<select id="selectUsrList" parameterType="usrVO" resultType="usrVO">
-		SELECT
-			  USR_ID
-			, USR_NAME
-			, USR_BRTH
-			, USR_PHONE
-			, USR_ADDR
-			, USR_LEVL
-			, CRE_DATE
-		  FROM SGMS_USR_LIST
-		 ORDER BY USR_LEVL, CRE_DATE DESC, USR_NAME
-	</select>
 </mapper>

@@ -16,100 +16,53 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 
 $(document).ready(function() {
-	//초기 화면 설정
-	selectUsrList();
+	/* 화면 로딩 시 본인이 속한 스터디 그룹이 조회되야 함. */
+	selectMyStdGrpList();
 })
 
-/* 회원 관리 */
-function selectUsrList() {
-	$('#usrListBtn').css({'background-color' : '#f0f0f0'});
-	$('#stdGrpListBtn').css({'background-color' : '#ffffff'});
+/* 내가 속한 스터디 조회 */
+function selectMyStdGrpList() {
+	var usr_id = '<%= (String) session.getAttribute("usr_id")%>';
+	$('#MyStdGrpListBtn').css({'background-color' : '#f0f0f0'});
+	$('#StdGrpListBtn').css({'background-color' : '#ffffff'});
 	
 	$.ajax({
-		url : "<c:url value='/selectUsrList.ajax'/>",
+		url : "<c:url value='/selectMyStdGrpList.ajax'/>",
 		type : "post",
 		async : true,
-		data : {"":""},
+		data : {
+			"usr_id"	:	usr_id
+		},
 		dataType : "json",
 		success : function(data) {
 			var result = data.resultList;
 			
-			//table display 설정
-			$('#resultTbl1').css('display', '');
-			$('#resultTbl2').css('display', 'none');
 			//tbody 초기화
-			var resultTblBody = $('#resultTbl1 tbody');
+			var resultTblBody = $('#resultTbl tbody');
 			resultTblBody.html('');
 			
 			//데이터 루프
 			for(var i=0; i<result.length; i++){
-				//전화번호
-				var usr_phone1 = result[i].usr_phone.substring(0,3);
-				var usr_phone2 = result[i].usr_phone.substring(3,7);
-				var usr_phone3 = result[i].usr_phone.substring(7,11);
-				//등급
-				var usr_levl = "";
-				if(result[i].usr_levl == '1'){
-					usr_levl = "관리자";
-				}else {
-					usr_levl = "일반회원";
-				}
-				//usr_id
-				var usr_id = result[i].usr_id;
-				
 				var row = $('<tr>');
-				row.append($('<td id="usr_id_' + i + '" style="text-align: left;">').html(result[i].usr_id));
-				row.append($('<td style="text-align: left;">').html(result[i].usr_name));
-				row.append($('<td>').html(result[i].usr_brth));
-				row.append($('<td>').html(usr_phone1 + '-' + usr_phone2 + '-' + usr_phone3));
-				row.append($('<td style="text-align: left;">').html(result[i].usr_addr));
-				row.append($('<td>').html(usr_levl));
+				row.append($('<td style="display: none;">').html(result[i].grp_id));
+				row.append($('<td class="stdGrpInfo" style="text-align: left;">').html('<a onclick="getGrpId()">' + result[i].grp_name  + '</a>'));
+				row.append($('<td style="text-align: left;">').html(result[i].grp_master));
+				row.append($('<td>').html(result[i].grp_type));
+				row.append($('<td style="text-align: left;">').html(result[i].dsc));
 				row.append($('<td>').html(result[i].cre_date));
-				row.append($('<td>').html('<a id="deleteBtn1_'+ i + '" onclick="deleteUsr('+usr_id+')">삭제</a>'));
 				
 				resultTblBody.append(row);
 			}
-			
 		},
 		error : function(request, status, error) {
 		}
 	});
 }
 
-/* 회원 삭제 */
-function deleteUsr(usr_id) {
-	alert(usr_id);
-	console.log(usr_id);
-	/* 
-	$.ajax({
-		url : "<c:url value='/deleteUsr.ajax'/>",
-		type : "post",
-		async : true,
-		data : {
-				"usr_id"	:	usr_id
-		},
-		dataType : "json",
-		success : function(data) {
-			var result = data.resultList;
-			console.log(result);
-			
-			//tbody 초기화
-			var resultTblBody = $('#resultTbl2 tbody');
-			resultTblBody.html('');
-			
-			//유저 목록 조회
-			selectUsrList();
-		},
-		error : function(request, status, error) {
-		}
-	});
-	 */
-}
-
-/* 스터디 목록 관리 */
+/* 스터디 목록 조회 */
 function selectStdGrpList() {
-	$('#usrListBtn').css({'background-color' : '#ffffff'});
-	$('#stdGrpListBtn').css({'background-color' : '#f0f0f0'});
+	$('#MyStdGrpListBtn').css({'background-color' : '#ffffff'});
+	$('#StdGrpListBtn').css({'background-color' : '#f0f0f0'});
 	
 	$.ajax({
 		url : "<c:url value='/selectStdGrpList.ajax'/>",
@@ -120,22 +73,19 @@ function selectStdGrpList() {
 		success : function(data) {
 			var result = data.resultList;
 			
-			//table display 설정
-			$('#resultTbl1').css('display', 'none');
-			$('#resultTbl2').css('display', '');
 			//tbody 초기화
-			var resultTblBody = $('#resultTbl2 tbody');
+			var resultTblBody = $('#resultTbl tbody');
 			resultTblBody.html('');
 			
 			//데이터 루프
 			for(var i=0; i<result.length; i++){
 				var row = $('<tr>');
-				row.append($('<td style="text-align: left;">').html(result[i].grp_name));
+				row.append($('<td style="display: none;">').html(result[i].grp_id));
+				row.append($('<td class="stdGrpInfo" style="text-align: left;">').html('<a onclick="getGrpId()">' + result[i].grp_name + '</a>'));
 				row.append($('<td style="text-align: left;">').html(result[i].grp_master));
 				row.append($('<td>').html(result[i].grp_type));
 				row.append($('<td style="text-align: left;">').html(result[i].dsc));
 				row.append($('<td>').html(result[i].cre_date));
-				row.append($('<td>').html('<a id="deleteBtn2_'+ i + '" onclick="deleteStdGrp('+result[i].grp_id+')">삭제</a>'));
 				
 				resultTblBody.append(row);
 			}
@@ -145,14 +95,33 @@ function selectStdGrpList() {
 	});
 }
 
-/* 스터디 그룹 삭제 */
-function deleteStdGrp(grp_id) {
-	alert("스터디 그룹 삭제");
+/* grp_id 가져오기 */
+function getGrpId() {
+	var table = document.getElementById('resultTbl');
+	var rowList = table.rows;
+	
+	for(i=1; i<rowList.length; i++){
+		var row = rowList[i];
+		var aTagInSecondTd = row.cells[1].querySelector('a');
+		
+		if(aTagInSecondTd) {
+			aTagInSecondTd.onclick = function() {
+				
+				var grp_id = this.closest('tr').cells[0].innerHTML;
+				
+				//스터디 상세 조회
+				stdGrpInfo(grp_id);
+			};
+		}
+	}
 }
 
-/* ID/비밀번호 찾기 */
-function find() {
-	var Url = "<c:url value='/find.do'/>";
+/* 스터디 상세 조회 */
+function stdGrpInfo(grp_id) {
+	var Url = "<c:url value='/stdGrpInfo.do'/>";
+	
+	//Get 방식 parameter 추가
+	Url += "?grp_id=" + grp_id;
 	
 	// 팝업 창의 초기 크기 설정
 	var popupWidth = 600;
@@ -172,6 +141,30 @@ function find() {
 	// 화면 가운데로 이동
 	popupWindow.moveTo(leftPosition, topPosition);
 }
+
+/* 회원 정보 수정 */
+function UsrUpdate() {
+	var Url = "<c:url value='/updateInfo.do'/>";
+	
+	// 팝업 창의 초기 크기 설정
+	var popupWidth = 600;
+	var popupHeight = 800;
+
+	// 현재 화면 크기 가져오기
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	// 팝업 창의 위치 계산
+	var leftPosition = (screenWidth - popupWidth) / 2;
+	var topPosition = (screenHeight - popupHeight) / 2;
+
+	// 팝업 창 열기
+	var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+	  
+	// 화면 가운데로 이동
+	popupWindow.moveTo(leftPosition, topPosition);
+}
+
 </script>
 <style >
 	.leftDiv {
@@ -227,44 +220,28 @@ function find() {
 <%@include file ="../semantic/header.jsp" %>
 </head>
 <body>
+<input id="grp_id" type="hidden" value=""/>
 	<div class="main-content">
 		<div class="leftDiv">
 			<div>
-				<button id="usrListBtn" type="button" onclick="selectUsrList()">회원관리</button>
+				<button id="MyStdGrpListBtn" type="button" onclick="selectMyStdGrpList()">내가 속한 스터디 보기</button>
 			</div>
 			<div>
-				<button id="stdGrpListBtn" type="button" onclick="selectStdGrpList()">스터디 목록 관리</button>
+				<button id="StdGrpListBtn" type="button" onclick="selectStdGrpList()">전체 스터디 목록 조회</button>
 			</div>
 			<div>
-				<button type="button">통계 조회</button>
+				<button id="UsrUpdateBtn" type="button" onclick="UsrUpdate()">회원 정보 수정(미완)</button>
 			</div>
 		</div>
 		<div class="rightDiv">
-			<table id="resultTbl1">
-				<thead>
-					<tr>
-						<th>아이디</th>
-						<th>이름</th>
-						<th style="width: 100px">생년월일</th>
-						<th>전화번호</th>
-						<th style="width: 300px">주소</th>
-						<th style="width: 100px">등급</th>
-						<th>생성일자</th>
-						<th style="width: 50px"></th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-			<table id="resultTbl2" style="display: none;">
+			<table id="resultTbl">
 				<thead>
 					<tr>
 						<th style="width: 250px">그룹명</th>
 						<th>그룹마스터</th>
 						<th style="width: 120px">그룹 타입</th>
-						<th style="width: 570px">설명</th>
+						<th style="width: 620px">설명</th>
 						<th>생성일자</th>
-						<th style="width: 50px"></th>
 					</tr>
 				</thead>
 				<tbody>

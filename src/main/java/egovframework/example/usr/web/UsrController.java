@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -210,6 +209,8 @@ public class UsrController {
 			errMsg = "일치하는 ID와 비밀번호가 없습니다.\nID와 비밀번호를 확인해주세요.";
 		}
 		
+		System.out.println(session.getAttribute("usr_id"));
+		
 		resultMap.put("result", result);
 		resultMap.put("errMsg", errMsg);
 		
@@ -299,27 +300,6 @@ public class UsrController {
 	}
 	
 	/**
-	 * 회원 목록
-	 * @param 
-	 * @param 
-	 * @return List<usrVO>
-	 * @exception Exception
-	 */
-	@ResponseBody
-	@RequestMapping(path = "/signUp.ajax", method=RequestMethod.POST, produces="application/json")
-	public ModelAndView selectUsrList(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
-		ModelAndView mv = new ModelAndView("jsonView");
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
-		int result = usrService.insertUsr(usrVO);
-		
-		resultMap.put("result", result);
-		
-		mv.addAllObjects(resultMap);
-		return mv;
-	}
-	
-	/**
 	 * 로그아웃
 	 * @param
 	 * @param 
@@ -328,9 +308,20 @@ public class UsrController {
 	 */
 	@RequestMapping(value="/logout.do")
 	public String logout(HttpServletRequest request) {
-		System.out.println(request.getSession().getAttribute("usr_id"));
 		RequestContextHolder.getRequestAttributes().removeAttribute("usr_id", RequestAttributes.SCOPE_SESSION);
 		request.getSession().invalidate();
 		return "redirect:/login.do";
+	}
+
+	/**
+	 * 마이페이지
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/myPage.do")
+	public String myPage() throws Exception {
+		return "usr/myPage";
 	}
 }

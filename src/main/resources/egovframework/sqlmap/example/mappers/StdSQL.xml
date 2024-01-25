@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.std.service.impl.StdMapper">
+
+	<!-- 본인이 속한 스터디 그룹 조회 -->
+	<select id="selectMyStdGrpList" parameterType="usrVO" resultType="stdVO">
+		SELECT 
+			  A.GRP_ID
+			, A.GRP_NAME
+			, A.GRP_MASTER
+			, A.GRP_TYPE
+			, A.DSC
+			, TO_CHAR(A.CRE_DATE, 'YYYY-MM-DD') AS CRE_DATE
+		  FROM SGMS_STD_GRP_LIST A, SGMS_STD_USR_LIST B
+		 WHERE A.GRP_ID = B.GRP_ID
+		   AND B.USR_ID = #{usr_id}
+	</select>
+	
+	<!-- 그룹 목록 조회 -->
+	<select id="selectGrpList" parameterType="stdVO" resultType="stdVO">
+		SELECT
+			  GRP_ID
+			, GRP_NAME
+			, GRP_MASTER
+			, GRP_TYPE
+			, DSC
+			, CRE_DATE
+		  FROM SGMS_STD_GRP_LIST
+	</select>
+	
+	<!-- 스터디 상세 조회 -->
+	<select id="selectStdGrpInfo" parameterType="stdVO" resultType="stdVO">
+		SELECT 
+			  A.GRP_NAME
+			, A.GRP_MASTER
+			, A.GRP_TYPE
+			, A.DSC
+			, TO_CHAR(A.CRE_DATE, 'YYYY-MM-DD') AS CRE_DATE
+		  FROM SGMS_STD_GRP_LIST A
+		 WHERE A.GRP_ID = #{grp_id}
+	</select>
+	
+	<!-- 스터디 상세 조회 - 일정조회 -->
+	<select id="selectStdGrpInfo_schd" parameterType="stdVO" resultType="stdVO">
+		SELECT 
+			  A.STD_YYYYMM
+			, A.STD_SCHD_NOTI
+		  FROM SGMS_STD_GRP_SCHD A
+		 WHERE A.GRP_ID = #{grp_id}
+		 ORDER BY CAST(STD_YYYYMM AS SIGNED) DESC
+	</select>
+	
+	<!-- 스터디 그룹원 체크 -->
+	<select id="stdUsrCheck" parameterType="stdVO" resultType="int">
+		SELECT 
+			  COUNT(*)
+		  FROM SGMS_STD_USR_LIST A
+		 WHERE A.GRP_ID = #{grp_id}
+		   AND A.USR_ID = #{usr_id}
+	</select>
+	
+	<!-- 스터디 가입 신청 -->
+	<select id="stdGrpSubReq" parameterType="stdVO">
+		INSERT INTO SGMS_STD_SUB_REQ(
+									  GRP_ID
+									, USR_ID
+									, REQ_DATE
+								) VALUES (
+									  #{grp_id}
+									, #{usr_id}
+									, NOW()
+										)
+	</select>
+</mapper>

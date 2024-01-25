@@ -58,7 +58,7 @@ function login() {
 					window.location.href = "<c:url value='/adminPage.do'/>";
 				}else {
 					alert('일반회원페이지 이동');
-					window.location.href = "<c:url value='/usrPage.do'/>";
+					window.location.href = "<c:url value='/myPage.do'/>";
 				}
 			},
 			error : function(request, status, error) {

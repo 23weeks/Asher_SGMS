@@ -7,6 +7,7 @@
 		
 		<!-- VO 추가 생성 시 하단에 추가할 것 -->
 		<typeAlias alias="usrVO" type="egovframework.example.usr.vo.UsrVO"/>
-		<typeAlias alias="adminVO" type="egoframework.example.admin.vo.AdminVO"/> 
+		<typeAlias alias="adminVO" type="egovframework.example.admin.vo.AdminVO"/> 
+		<typeAlias alias="stdVO" type="egovframework.example.std.vo.StdVO"/> 
     </typeAliases>
 </configuration>

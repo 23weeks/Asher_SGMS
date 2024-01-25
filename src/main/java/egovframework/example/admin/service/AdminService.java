@@ -20,13 +20,13 @@ import java.util.List;
 import egovframework.example.usr.vo.UsrVO;
 
 /**
- * @Class Name : UsrService.java
- * @Description : UsrService Class
+ * @Class Name : AdminService.java
+ * @Description : AdminService Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
  * @ ---------   ---------   -------------------------------
- * @ 2024.01.11           최초생성
+ * @ 2024.01.18           최초생성
  *
  * @author SJLEE
  */
@@ -39,44 +39,4 @@ public interface AdminService {
 	 * @exception Exception
 	 */
 	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
-
-	/**
-	 * ID 중복 체크
-	 * @param usrVO - usr_id
-	 * @return int
-	 * @exception Exception
-	 */
-	int usrDupCheck(UsrVO usrVO) throws Exception;
-	
-	/**
-	 * 회원가입
-	 * @param usrVO
-	 * @return int
-	 * @exception Exception
-	 */
-	int insertUsr(UsrVO usrVO) throws Exception;
-	
-	/**
-	 * 로그인
-	 * @param usrVO - usr_id, usr_pwd
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception;
-	
-	/**
-	 * ID찾기
-	 * @param usrVO - usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	UsrVO findId(UsrVO usrVO) throws Exception;
-	
-	/**
-	 * 비밀번호 찾기
-	 * @param usrVO - usr_id, usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	UsrVO findPwd(UsrVO usrVO) throws Exception;
 }

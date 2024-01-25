@@ -17,14 +17,14 @@ package egovframework.example.admin.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 
-import org.springframework.stereotype.Repository;
-
 /**
- * @Class Name : UsrDAO.java
- * @Description : Usr DAO Class
+ * @Class Name : AdminDAO.java
+ * @Description : Admin DAO Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
  * @author SJLEE
  */
 
-@Repository("UsrDAO")
+@Repository("adminDAO")
 public class AdminDAO extends EgovAbstractDAO {
 
 	/**
@@ -44,56 +44,6 @@ public class AdminDAO extends EgovAbstractDAO {
 	 * @exception Exception
 	 */
 	List<?> selectUsrList(UsrVO usrVO) throws Exception {
-		return list("usrDAO.selectUsrList", usrVO);
-	}
-
-	/**
-	 * ID 중복 체크
-	 * @param usrVO - usr_id
-	 * @return int
-	 * @exception Exception
-	 */
-	int usrDupCheck(UsrVO usrVO) throws Exception {
-		return (int) select("usrDAO.usrDupCheck", usrVO);
-	}
-	
-	/**
-	 * 회원가입
-	 * @param usrVO
-	 * @return int
-	 * @exception Exception
-	 */
-	int insertUsr(UsrVO usrVO) throws Exception {
-		return (int) insert("usrDAO.insertUsr", usrVO);
-	}
-	
-	/**
-	 * 로그인
-	 * @param usrVO - usr_id, usr_pwd
-	 * @return UsrVO
-	 * @exception Exception
-	 */
-	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception {
-		return (UsrVO) select("usrDAO.loginUsrInfo" , usrVO);
-	}
-	
-	/**
-	 * ID찾기
-	 * @param usrVO - usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	UsrVO findId(UsrVO usrVO) throws Exception {
-		return (UsrVO) select("usrDAO.findId" , usrVO);
-	}
-	
-	/**
-	 * 비밀번호 찾기
-	 * @param usrVO - usr_id, usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	UsrVO findPwd(UsrVO usrVO) throws Exception {
-		return (UsrVO) select("usrDAO.findPwd", usrVO);
+		return list("adminDAO.selectUsrList", usrVO);
 	}
 }

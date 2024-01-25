@@ -23,31 +23,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import egovframework.example.usr.service.UsrService;
+import egovframework.example.admin.service.AdminService;
 import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 
 /**
- * @Class Name : UsrServiceImpl.java
- * @Description : Usr Business Implement Class
+ * @Class Name : AdminServiceImpl.java
+ * @Description : Admin Business Implement Class
  * @Modification Information
  * @ @ 수정일 수정자 수정내용 
  * @ --------- --------- ------------------------------- 
- *   2024.01.11 최초생성
+ *   2024.01.18 최초생성
  *
  * @author SJLEE
  */
 
-@Service("usrService")
-public class AdminServiceImpl extends EgovAbstractServiceImpl implements UsrService {
+@Service("adminService")
+public class AdminServiceImpl extends EgovAbstractServiceImpl implements AdminService {
 
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
 	// TODO mybatis 사용
-	@Resource(name = "usrMapper")
-	private AdminMapper usrMapper;
+	@Resource(name = "adminMapper")
+	private AdminMapper adminMapper;
 
 	/** ID Generation */
 	@Resource(name = "egovIdGnrService")
@@ -59,63 +59,9 @@ public class AdminServiceImpl extends EgovAbstractServiceImpl implements UsrServ
 	 * @return List<usrVO>
 	 * @exception Exception
 	 */
+
 	@Override
 	public List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception {
-		return usrMapper.selectUsrList(usrVO);
-	}
-
-	/**
-	 * ID중복체크
-	 * @param usrVO - usr_id
-	 * @return int
-	 * @exception Exception
-	 */
-	@Override
-	public int usrDupCheck(UsrVO usrVO) throws Exception {
-		return usrMapper.usrDupCheck(usrVO);
-	}
-
-	/**
-	 * 회원가입
-	 * @param usrVO
-	 * @return int
-	 * @exception Exception
-	 */
-	@Override
-	public int insertUsr(UsrVO usrVO) throws Exception {
-		return usrMapper.insertUsr(usrVO);
-	}
-
-	/**
-	 * 로그인
-	 * @param usrVO - usr_id, usr_pwd
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	@Override
-	public UsrVO loginUsrInfo(UsrVO usrVO) throws Exception {
-		return usrMapper.loginUsrInfo(usrVO);
-	}
-
-	/**
-	 * ID찾기
-	 * @param usrVO - usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	@Override
-	public UsrVO findId(UsrVO usrVO) throws Exception {
-		return usrMapper.findId(usrVO);
-	}
-
-	/**
-	 * 비밀번호 찾기
-	 * @param usrVO - usr_id, usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	@Override
-	public UsrVO findPwd(UsrVO usrVO) throws Exception {
-		return usrMapper.findPwd(usrVO);
+		return adminMapper.selectUsrList(usrVO);
 	}
 }

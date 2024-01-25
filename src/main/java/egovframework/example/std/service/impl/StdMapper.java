@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.usr.service.impl;
+package egovframework.example.std.service.impl;
 
 import java.util.List;
 
@@ -22,77 +22,70 @@ import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 /**
- * usr에 관한 데이터처리 매퍼 클래스
+ * Study Group에 관한 데이터처리 매퍼 클래스
  *
  * @author  SJLEE
- * @since 2024.01.11
+ * @since 2024.01.22
  * @version 1.0
  * @see <pre>
  *  == 개정이력(Modification Information) ==
  *
  *          수정일          수정자           수정내용
  *  ----------------    ------------    ---------------------------
- *   2024.01.11          최초 생성
+ *   2024.01.18          최초 생성
  *
  * </pre>
  */
-@Mapper("usrMapper")
-public interface UsrMapper {
+@Mapper("stdMapper")
+public interface StdMapper {
 
 	/**
-	 * 유저 목록 조회
+	 * 본인이 속한 스터디 목록 조회
+	 * @param usrVO - usr_id
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	List<StdVO> selectMyStdGrpList(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 스터디 목록 조회
 	 * @param
-	 * @return List<usrVO>
+	 * @return List<stdVO>
 	 * @exception Exception
 	 */
-	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
+	List<StdVO> selectGrpList(StdVO stdVO) throws Exception;
 	
 	/**
-	 * ID 중복 체크
-	 * @param usrVO - usr_id
-	 * @return int
+	 * 스터디 상세 조회
+	 * @param StdVO - grp_id
+	 * @return stdVO
 	 * @exception Exception
 	 */
-	int usrDupCheck(UsrVO usrVO) throws Exception;
-
-	/**
-	 * 회원가입
-	 * @param usrVO
-	 * @return int
-	 * @exception Exception
-	 */
-	int insertUsr(UsrVO usrVO) throws Exception;
+	StdVO selectStdGrpInfo(StdVO stdVO) throws Exception;
 	
 	/**
-	 * 로그인
-	 * @param usrVO - usr_id, usr_pwd
-	 * @return usrVO
+	 * 스터디 상세 조회 - 일정 조회
+	 * @param StdVO - grp_id
+	 * @return List<stdVO>
 	 * @exception Exception
 	 */
-	UsrVO loginUsrInfo(UsrVO usrVO) throws Exception;
-	
-	/**
-	 * ID찾기
-	 * @param usrVO - usr_name, usr_brth, usr_phone
-	 * @return usrVO
-	 * @exception Exception
-	 */
-	UsrVO findId(UsrVO usrVO) throws Exception;
+	List<StdVO> selectStdGrpInfo_schd(StdVO stdVO) throws Exception;
 	
 	
 	/**
-	 * 비밀번호 찾기
-	 * @param usrVO - usr_id, usr_name, usr_brth, usr_phone
-	 * @return usrVO
+	 * 스터디 그룹원 체크
+	 * @param StdVO - grp_id, usr_id
+	 * @return boolean
 	 * @exception Exception
 	 */
-	UsrVO findPwd(UsrVO usrVO) throws Exception;
+	int stdUsrCheck(StdVO stdVO) throws Exception;
+	
 	
 	/**
-	 * 본인이 속한 스터디 그룹 조회
-	 * @param usrVO - usr_id
-	 * @return List<StdVO>
+	 * 스터디 가입 신청
+	 * @param StdVO - grp_id, usr_id
+	 * @return boolean
 	 * @exception Exception
 	 */
-	List<StdVO> selectMyStdGrpList(StdVO stdVO) throws Exception;
+	int stdGrpSubReq(StdVO stdVO) throws Exception;
 }
