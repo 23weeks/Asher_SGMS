@@ -60,7 +60,7 @@ function selectStdGrpInfo() {
 					var std_month = result_schd[i].std_yyyymm.substring(4,6);
 					var std_day = result_schd[i].std_yyyymm.substring(6,8);
 					
-					std_schd.append($('<h2 style="font-size: 20px; padding-bottom: 10px">').html(std_year + ' - ' + std_month + ' - ' + std_day));
+					std_schd.append($('<h2 style="font-size: 20px; padding-bottom: 10px">').html(std_year + ' - ' + std_month + ' - ' + std_day + '<a style="margin-left:300px">참석 여부</a>'));
 				}
 			}else{
 				std_schd.append($('<h2 style="text-align: left;">').html("일정이 없습니다."));
