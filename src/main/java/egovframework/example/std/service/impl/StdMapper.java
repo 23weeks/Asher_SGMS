@@ -88,4 +88,85 @@ public interface StdMapper {
 	 * @exception Exception
 	 */
 	int stdGrpSubReq(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 그룹마스터 유무 확인
+	 * @param StdVO - usr_id
+	 * @return boolean
+	 * @exception Exception
+	 */
+	int stdGrpMasterCheck(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 그룹 생성
+	 * @param stdVO
+	 * @return boolean
+	 * @exception Exception
+	 */
+	int addStdGrp(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디명 중복체크
+	 * @param stdVO - grp_name
+	 * @return boolean
+	 * @exception Exception
+	 */
+	int grpNamedupCheck(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 인원 추가
+	 * @param stdVO - grp_id, usr_id
+	 * @return 
+	 * @exception Exception
+	 */
+	int addStdUsr(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 생성된 group grp_id 가져오기
+	 * @param stdVO - grp_name, grp_type, grp_master
+	 * @return boolean
+	 * @exception Exception
+	 */
+	StdVO getAddedGrpId(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 기존 신청 이력 확인
+	 * @param stdVO - grp_id, usr_id
+	 * @return boolean
+	 * @exception Exception
+	 */
+	int stdGrpSubReqCheck(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 가입 신청 목록
+	 * @param stdVO - grp_id
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	List<StdVO> selectStdSubReqList(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 가입 신청 승인 날짜 update
+	 * @param stdVO - grp_id, usr_id
+	 * @return 
+	 * @exception Exception
+	 */
+	void stdSubReqUdate(StdVO stdVO) throws Exception;
+	
+	
+	/**
+	 * 일정 추가
+	 * @param stdVO - grp_id, std_yyyymm
+	 * @return void
+	 * @exception Exception
+	 */
+	void addSchd(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 일정 체크
+	 * @param stdVO - grp_id, std_yyyymm
+	 * @return boolean
+	 * @exception Exception
+	 */
+	int selectSchdCheck(StdVO stdVO) throws Exception;
 }

@@ -48,7 +48,7 @@ function selectStdGrpInfo() {
 			var result_schd = data.result_schd;
 			var stdUsrCheck = data.stdUsrCheck;
 			var std_schd = $('#std_schd');
-			console.log(data);
+			std_schd.html("");
 			
 			$('#grp_name').html(result.grp_name);
 			$('#dsc').html(result.dsc);
@@ -68,16 +68,76 @@ function selectStdGrpInfo() {
 			
 			//그룹원 체크
 			if(stdUsrCheck == 1) {
+				//가입 신청 버튼
 				$('#grpReqBtn').css({"display" : "none"});
 			}
 			//그룹마스터 체크
 			if(result.grp_master != usr_id) {
+				//일정 추가 버튼
 				$('#addSchdBtn').css({"display" : "none"});
+				//가입 신청 목록 버튼
+				$('#stdGrpSubReqListBtn').css({"display" : "none"});
 			}
 		},
 		error : function(request, status, error) {
 		}
 	});
+}
+
+//일정추가
+function addSchd() {
+	var grp_id = '${param.grp_id}';
+	
+var Url = "<c:url value='/addSchd.do'/>";
+	
+	//get방식 parameter 추가
+	Url += "?grp_id=" + grp_id;
+	
+	// 팝업 창의 초기 크기 설정
+	var popupWidth = 550;
+	var popupHeight = 300;
+
+	// 현재 화면 크기 가져오기
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	// 팝업 창의 위치 계산
+	var leftPosition = (screenWidth - popupWidth) / 2;
+	var topPosition = (screenHeight - popupHeight) / 2;
+
+	// 팝업 창 열기
+	var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+	  
+	// 화면 가운데로 이동
+	popupWindow.moveTo(leftPosition, topPosition);
+}
+
+//가입 신청 목록
+function stdGrpSubReqList() {
+	var grp_id = '${param.grp_id}';
+	
+	var Url = "<c:url value='/stdGrpSubReqList.do'/>";
+	
+	//get방식 parameter 추가
+	Url += "?grp_id=" + grp_id;
+	
+	// 팝업 창의 초기 크기 설정
+	var popupWidth = 550;
+	var popupHeight = 600;
+
+	// 현재 화면 크기 가져오기
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	// 팝업 창의 위치 계산
+	var leftPosition = (screenWidth - popupWidth) / 2;
+	var topPosition = (screenHeight - popupHeight) / 2;
+
+	// 팝업 창 열기
+	var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+	  
+	// 화면 가운데로 이동
+	popupWindow.moveTo(leftPosition, topPosition);
 }
 
 function stdGrpSubReq() {
@@ -95,10 +155,15 @@ function stdGrpSubReq() {
 			},
 			dataType : "json",
 			success : function(data) {
-				var result = data.result;
-				
-				if(result == 1){
-					alert('가입 신청 되었습니다.');
+				if(data.errMsg != null){
+					alert(data.errMsg);
+				}else{
+					var result = data.result;
+					
+					if(result == 1){
+						alert('가입 신청이 완료되었습니다.');
+						window.self.close();
+					}
 				}
 			},
 			error : function(request, status, error) {
@@ -127,9 +192,10 @@ function stdGrpSubReq() {
 			</div>
 		</div>
 		<div style="text-align: center">
-			<a id="addSchdBtn" onclick="popUpClose()" style="padding-right: 70px">일정 추가</a>
+			<a id="addSchdBtn" onclick="addSchd()" style="padding-right: 70px">일정 추가</a>
 			<a id="closeBtn" onclick="popUpClose()">닫기</a>
 			<a id="grpReqBtn" onclick="stdGrpSubReq()" style="padding-left: 70px">가입 신청</a>
+			<a id="stdGrpSubReqListBtn" onclick="stdGrpSubReqList()" style="padding-left: 70px">가입 신청 목록</a>
 		</div>
 	</div>
 </body>

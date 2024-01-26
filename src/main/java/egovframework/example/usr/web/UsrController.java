@@ -209,7 +209,9 @@ public class UsrController {
 			errMsg = "일치하는 ID와 비밀번호가 없습니다.\nID와 비밀번호를 확인해주세요.";
 		}
 		
-		System.out.println(session.getAttribute("usr_id"));
+		System.out.println("========= login User Id =========");
+		System.out.println("|		" + session.getAttribute("usr_id") + "		|");
+		System.out.println("=================================");
 		
 		resultMap.put("result", result);
 		resultMap.put("errMsg", errMsg);

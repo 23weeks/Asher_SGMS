@@ -48,6 +48,7 @@
 		  FROM SGMS_STD_GRP_SCHD A
 		 WHERE A.GRP_ID = #{grp_id}
 		 ORDER BY CAST(STD_YYYYMM AS SIGNED) DESC
+		 LIMIT 5
 	</select>
 	
 	<!-- 스터디 그룹원 체크 -->
@@ -60,7 +61,7 @@
 	</select>
 	
 	<!-- 스터디 가입 신청 -->
-	<select id="stdGrpSubReq" parameterType="stdVO">
+	<insert id="stdGrpSubReq" parameterType="stdVO">
 		INSERT INTO SGMS_STD_SUB_REQ(
 									  GRP_ID
 									, USR_ID
@@ -70,5 +71,102 @@
 									, #{usr_id}
 									, NOW()
 										)
+	</insert>
+	
+	<!-- 그룹마스터 유무 확인 -->
+	<select id="stdGrpMasterCheck" parameterType="stdVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM SGMS_STD_GRP_LIST A
+		 WHERE GRP_MASTER = #{usr_id}
+	</select>
+	
+	<!-- 스터디명 중복체크 -->
+	<select id="grpNamedupCheck" parameterType="stdVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM SGMS_STD_GRP_LIST A
+		 WHERE GRP_NAME = #{grp_name}
+	</select>
+	
+	<!-- 스터디 그룹 생성 -->
+	<insert id="addStdGrp" parameterType="stdVO">
+		INSERT INTO SGMS_STD_GRP_LIST (
+										  GRP_NAME
+										, GRP_MASTER
+										, GRP_TYPE
+										, DSC
+										, CRE_DATE
+									) VALUES (
+										  #{grp_name}
+										, #{grp_master}
+										, #{grp_type}
+										, #{dsc}
+										, NOW()
+									)
+	</insert>
+	
+	<!-- 생성된 그룹 GRP_ID 가져오기 -->
+	<select id="getAddedGrpId" parameterType="stdVO" resultType="stdVO">
+		SELECT GRP_ID
+		  FROM SGMS_STD_GRP_LIST
+		 WHERE GRP_NAME = #{grp_name}
+		   AND GRP_TYPE = #{grp_type}
+		   AND GRP_MASTER = #{grp_master}
+	</select>
+	
+	<!-- 스터디 인원 추가 -->
+	<insert id="addStdUsr" parameterType="stdVO">
+		INSERT INTO SGMS_STD_USR_LIST (
+										  GRP_ID
+										, USR_ID
+									) VALUES (
+										  #{grp_id}
+										, #{usr_id}
+									)
+	</insert>
+	
+	<!-- 스터디 기존 신청 이력 확인 -->
+	<select id="stdGrpSubReqCheck" parameterType="stdVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM SGMS_STD_SUB_REQ
+		 WHERE GRP_ID = #{grp_id}
+		   AND USR_ID = #{usr_id}
+	</select>
+	
+	<select id="selectStdSubReqList" parameterType="stdVO" resultType="stdVO">
+		SELECT
+			  USR_ID
+			, REQ_DATE
+		  FROM SGMS_STD_SUB_REQ
+		 WHERE GRP_ID = #{grp_id}
+		   AND APP_DATE IS NULL
+	</select>
+	
+	<!-- 가입 신청 승인 날짜 update -->
+	<update id="stdSubReqUdate" parameterType="stdVO">
+		UPDATE SGMS_STD_SUB_REQ
+		   SET APP_DATE = NOW()
+		 WHERE GRP_ID = #{grp_id}
+		   AND USR_ID = #{usr_id}
+	</update>
+	
+	<!-- 일정 추가 -->
+	<insert id="addSchd" parameterType="stdVO">
+		INSERT INTO SGMS_STD_GRP_SCHD (
+										  STD_YYYYMM
+										, GRP_ID
+										, STD_SCHD_NOTI
+									) VALUES (
+										  #{std_yyyymm}
+										, #{grp_id}
+										, NOW()
+									)
+	</insert>
+	
+	<!-- 이미 일정이 있는 날인지 체크 -->
+	<select id="selectSchdCheck" parameterType="stdVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM SGMS_STD_GRP_SCHD
+		 WHERE STD_YYYYMM = #{std_yyyymm}
+		   AND GRP_ID = #{grp_id}
 	</select>
 </mapper>

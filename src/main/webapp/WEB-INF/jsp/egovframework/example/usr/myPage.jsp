@@ -165,6 +165,49 @@ function UsrUpdate() {
 	popupWindow.moveTo(leftPosition, topPosition);
 }
 
+/* 스터디 그룹 생성 */
+function stdGrpMasterCheck() {
+	var usr_id = '<%= (String) session.getAttribute("usr_id")%>';
+	
+	$.ajax({
+		url : "<c:url value='/stdGrpMasterCheck.ajax'/>",
+		type : "post",
+		async : true,
+		data : {
+			"usr_id"	:	usr_id
+		},
+		dataType : "json",
+		success : function(data) {
+			var errMsg = data.errMsg;
+			
+			if(errMsg != ""){
+				alert(errMsg);
+			}else{
+				var Url = "<c:url value='/addStdGrp.do'/>";
+				
+				// 팝업 창의 초기 크기 설정
+				var popupWidth = 600;
+				var popupHeight = 800;
+
+				// 현재 화면 크기 가져오기
+				var screenWidth = window.screen.width;
+				var screenHeight = window.screen.height;
+
+				// 팝업 창의 위치 계산
+				var leftPosition = (screenWidth - popupWidth) / 2;
+				var topPosition = (screenHeight - popupHeight) / 2;
+
+				// 팝업 창 열기
+				var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+				  
+				// 화면 가운데로 이동
+				popupWindow.moveTo(leftPosition, topPosition);
+			}
+		},
+		error : function(request, status, error) {
+		}
+	});
+}
 </script>
 <style >
 	.leftDiv {
@@ -181,7 +224,14 @@ function UsrUpdate() {
 		width: 80%;
 		float: right;
 		background-color: #f5f5f5;
-		height: 720px;
+		height: 600px;
+		padding: 10px;
+	}
+	
+	.bottomDiv {
+		width: 80%;
+		float: right;
+		height: 110px;
 		padding: 10px;
 	}
 	
@@ -216,6 +266,11 @@ function UsrUpdate() {
 		text-align: center;
 		font-size: 12px;
 	}
+	
+	.bottomDiv button:hover {
+		cursor: pointer;		 /* 마우스 모양을 손가락으로 변경 */
+		background-color: #f0f0f0;
+	}
 </style>
 <%@include file ="../semantic/header.jsp" %>
 </head>
@@ -247,6 +302,9 @@ function UsrUpdate() {
 				<tbody>
 				</tbody>
 			</table>
+		</div>
+		<div class="bottomDiv" style="text-align: right">
+			<button type="button" style="text-align: center; font-size: 20px; border: 1px solid; padding: 5px;" onclick="stdGrpMasterCheck()">스터디 그룹 생성</button>
 		</div>
 	</div>
 </body>

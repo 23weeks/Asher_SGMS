@@ -120,4 +120,102 @@ public class StdServiceImpl extends EgovAbstractServiceImpl implements StdServic
 		return stdMapper.stdGrpSubReq(stdVO);
 	}
 
+	/**
+	 * 스터디 그룹마스터 유무 확인
+	 * @param StdVO - usr_id
+	 * @return boolean
+	 * @exception Exception
+	 */
+	@Override
+	public int stdGrpMasterCheck(StdVO stdVO) throws Exception {
+		return stdMapper.stdGrpMasterCheck(stdVO);
+	}
+
+	@Override
+	public int addStdGrp(StdVO stdVO) throws Exception {
+		return stdMapper.addStdGrp(stdVO);
+	}
+
+	/**
+	 * 스터디명 중복체크
+	 * @param stdVO - grp_name
+	 * @return boolean
+	 * @exception Exception
+	 */
+	@Override
+	public int grpNamedupCheck(StdVO stdVO) throws Exception {
+		return stdMapper.grpNamedupCheck(stdVO);
+	}
+
+	/**
+	 * 생성된 group grp_id 가져오기
+	 * @param stdVO - grp_name, grp_type, grp_master
+	 * @return boolean
+	 * @exception Exception
+	 */
+	@Override
+	public StdVO getAddedGrpId(StdVO stdVO) throws Exception {
+		return stdMapper.getAddedGrpId(stdVO);
+	}
+
+	/**
+	 * 스터디 인원 추가
+	 * @param stdVO - grp_id, usr_id
+	 * @return boolean
+	 * @exception Exception
+	 */
+	@Override
+	public int addStdUsr(StdVO stdVO) throws Exception {
+		return stdMapper.addStdUsr(stdVO);
+	}
+
+	@Override
+	public int stdGrpSubReqCheck(StdVO stdVO) throws Exception {
+		return stdMapper.stdGrpSubReqCheck(stdVO);
+	}
+
+	/**
+	 * 스터디 가입 신청 목록
+	 * @param stdVO - grp_id
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	@Override
+	public List<StdVO> selectStdSubReqList(StdVO stdVO) throws Exception {
+		return stdMapper.selectStdSubReqList(stdVO);
+	}
+
+	/**
+	 * 스터디 가입 신청 승인 날짜 update
+	 * @param stdVO - grp_id, usr_id
+	 * @return 
+	 * @exception Exception
+	 */
+	@Override
+	public void stdSubReqUdate(StdVO stdVO) throws Exception {
+		stdMapper.stdSubReqUdate(stdVO);
+	}
+
+	/**
+	 * 일정 추가
+	 * @param stdVO - grp_id, std_yyyymm
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void addSchd(StdVO stdVO) throws Exception {
+		stdMapper.addSchd(stdVO);
+	}
+
+	/**
+	 * 일정 체크
+	 * @param stdVO - grp_id, std_yyyymm
+	 * @return boolean
+	 * @exception Exception
+	 */
+	@Override
+	public int selectSchdCheck(StdVO stdVO) throws Exception {
+		return stdMapper.selectSchdCheck(stdVO);
+	}
+
 }

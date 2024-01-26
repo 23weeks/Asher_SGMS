@@ -74,7 +74,7 @@ public class StdController {
 	}
 	
 	/**
-	 * 스터디 상세 조회
+	 * 스터디 상세 조회 페이지
 	 * @param 
 	 * @param 
 	 * @return 
@@ -117,6 +117,124 @@ public class StdController {
 		return mv;
 	}
 	
+	/**
+	 * 기존 스터디 마스터 유무 확인
+	 * @param 
+	 * @param 
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/stdGrpMasterCheck.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView stdGrpMasterCheck(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String errMsg = "";
+		
+		//기존 스터디 마스터 유무 확인
+		int stdGrpMasterCheck = stdService.stdGrpMasterCheck(stdVO);
+		
+		if(stdGrpMasterCheck != 0) {
+			errMsg = "회원당 1개의 그룹만 생성할 수 있습니다.";
+		}
+		
+		resultMap.put("errMsg", errMsg);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	/**
+	 * 스터디 생성 페이지
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/addStdGrp.do")
+	public String addStdGrp() throws Exception {
+		return "std/addStdGrp";
+	}
+	
+	
+	/**
+	 * 스터디명 중복체크
+	 * @param stdVO - grp_name
+	 * @param 
+	 * @return result
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/grpNamedupCheck.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView grpNamedupCheck(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int grpNamedupCheck = stdService.grpNamedupCheck(stdVO);
+		String errMsg = "";
+		
+		if(grpNamedupCheck == 0) {
+			errMsg = "사용이 가능합니다.";
+		}else {
+			errMsg = "이미 존재하는 스터디명입니다. 다른 스터디명을 사용해주세요.";
+		}
+		
+		resultMap.put("grpNamedupCheck", grpNamedupCheck);
+		resultMap.put("result", errMsg);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	/**
+	 * 스터디 생성
+	 * @param 
+	 * @param 
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/addStdGrp.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView addStdGrp(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		//스터디 생성
+		stdService.addStdGrp(stdVO);
+		
+		//생성된 스터디 grp_id 가져오기
+		StdVO getAddedGrpId = stdService.getAddedGrpId(stdVO);
+		
+		resultMap.put("result", getAddedGrpId);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	/**
+	 * 스터디 그룹 유저 추가
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/addStdUsr.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView addStdUsr(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		//유저 등록
+		stdService.addStdUsr(stdVO);
+		
+		//요청 승인 날짜 업데이트
+		stdService.stdSubReqUdate(stdVO);
+		
+		return mv;
+	}
 	
 	/**
 	 * 스터디 가입 신청
@@ -131,10 +249,98 @@ public class StdController {
 		ModelAndView mv = new ModelAndView("jsonView");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		//스터디 가입 신청
-		int result = stdService.stdGrpSubReq(stdVO);
+		String errMsg = "";
+		/* 기존 신청 이력 확인 */
+		int stdGrpSubReqCheck = stdService.stdGrpSubReqCheck(stdVO);
 		
-		resultMap.put("result", result);
+		if(stdGrpSubReqCheck != 0) {
+			errMsg = "이미 가입신청한 그룹입니다.";
+			resultMap.put("errMsg", errMsg);
+		}else {
+			//스터디 가입 신청
+			int result = stdService.stdGrpSubReq(stdVO);
+			resultMap.put("result", result);
+		}
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 스터디 가입 신청 목록
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/stdGrpSubReqList.do")
+	public String stdGrpSubReqList() throws Exception {
+		return "std/stdGrpSubReqList";
+	}
+	
+	/**
+	 * 스터디 가입 신청 목록
+	 * @param StdVO - grp_id
+	 * @param 
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/selectStdSubReqList.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView selectStdSubReqList(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<StdVO> resultList = stdService.selectStdSubReqList(stdVO);
+		
+		resultMap.put("resultList", resultList);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 일정 추가 페이지
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/addSchd.do")
+	public String addSchd() throws Exception {
+		return "std/addSchd";
+	}
+	
+	/**
+	 * 일정 추가
+	 * @param StdVO - grp_id, std_yyyymm
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/addSchd.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView addSchd(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String errMsg = "";
+		
+		//이미 일정이 있는 날인지 체크
+		int selectSchdCheck = stdService.selectSchdCheck(stdVO);
+		
+		if(selectSchdCheck != 0) {
+			errMsg = "이미 추가되어 있는 일정입니다.\n다른 일정을 선택해주세요.";
+		}else {
+			//일정 추가
+			stdService.addSchd(stdVO);
+		}
+		
+		resultMap.put("errMsg", errMsg);
 		
 		mv.addAllObjects(resultMap);
 		

@@ -43,6 +43,7 @@ public class StdVO extends UsrVO implements Serializable {
 	private String grp_type;
 	private String dsc;
 	private String cre_date;
+	private String req_date;
 	
 	private String std_yyyymm;
 	private String std_schd_noti;
@@ -100,10 +101,17 @@ public class StdVO extends UsrVO implements Serializable {
 		return serialVersionUID;
 	}
 	
+	public String getReq_date() {
+		return req_date;
+	}
+	public void setReq_date(String req_date) {
+		this.req_date = req_date;
+	}
+	
 	@Override
 	public String toString() {
 		return "StdVO [grp_id=" + grp_id + ", grp_name=" + grp_name + ", grp_master=" + grp_master + ", grp_type="
-				+ grp_type + ", dsc=" + dsc + ", cre_date=" + cre_date + ", std_yyyymm=" + std_yyyymm
-				+ ", std_schd_noti=" + std_schd_noti + "]";
+				+ grp_type + ", dsc=" + dsc + ", cre_date=" + cre_date + ", req_date=" + req_date + ", std_yyyymm="
+				+ std_yyyymm + ", std_schd_noti=" + std_schd_noti + "]";
 	}
 }
