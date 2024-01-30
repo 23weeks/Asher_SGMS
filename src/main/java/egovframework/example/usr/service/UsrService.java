@@ -17,6 +17,7 @@ package egovframework.example.usr.service;
 
 import java.util.List;
 
+import egovframework.example.std.vo.StdVO;
 import egovframework.example.usr.vo.UsrVO;
 
 /**
@@ -79,4 +80,20 @@ public interface UsrService {
 	 * @exception Exception
 	 */
 	UsrVO findPwd(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 회원 비밀번호 가져오기
+	 * @param usrVO - usr_id
+	 * @return usrVO - usr_pwd
+	 * @exception Exception
+	 */
+	UsrVO selectUsrInfo(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 회원 정보 수정
+	 * @param usrVO - usr_id, usr_pwd, usr_brth, usr_phone, usr_addr
+	 * @return void
+	 * @exception Exception
+	 */
+	void updateInfo(UsrVO usrVO) throws Exception;
 }

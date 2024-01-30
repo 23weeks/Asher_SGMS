@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import egovframework.example.std.vo.StdVO;
 import egovframework.example.usr.service.UsrService;
 import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -117,5 +118,26 @@ public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrServic
 	@Override
 	public UsrVO findPwd(UsrVO usrVO) throws Exception {
 		return usrMapper.findPwd(usrVO);
+	}
+
+	/**
+	 * 회원 비밀번호 가져오기
+	 * @param usrVO - usr_id
+	 * @return usrVO - usr_pwd
+	 * @exception Exception
+	 */
+	public UsrVO selectUsrInfo(UsrVO usrVO) throws Exception {
+		return usrMapper.selectUsrInfo(usrVO);
+	}
+
+	/**
+	 * 회원 정보 수정
+	 * @param usrVO - usr_id, usr_pwd, usr_brth, usr_phone, usr_addr
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void updateInfo(UsrVO usrVO) throws Exception {
+		usrMapper.updateInfo(usrVO);
 	}
 }

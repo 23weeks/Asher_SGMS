@@ -76,4 +76,21 @@
 		   AND USR_PHONE = #{usr_phone}
 	</select>
 	
+	<!-- 회원 정보 수정 -->
+	<update id="updateInfo" parameterType="usrVO">
+		UPDATE SGMS_USR_LIST
+		   SET USR_PWD = #{usr_pwd}
+			 , USR_BRTH = #{usr_brth}
+			 , USR_PHONE = #{usr_phone}
+			 , USR_ADDR = #{usr_addr}
+		 WHERE USR_ID = #{usr_id}
+	</update>
+	
+	<!-- 회원 비밀번호 가져오기 -->
+	<select id="selectUsrInfo" parameterType="usrVO" resultType="usrVO">
+		SELECT
+			  USR_PWD
+		  FROM SGMS_USR_LIST
+		 WHERE USR_ID = #{usr_id}
+	</select>
 </mapper>

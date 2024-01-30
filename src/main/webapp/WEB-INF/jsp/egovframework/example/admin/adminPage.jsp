@@ -78,8 +78,22 @@ function selectUsrList() {
 
 /* 회원 삭제 */
 function deleteUsr(usr_id) {
-	alert(usr_id);
-	console.log(usr_id);
+	var table = document.getElementById('resultTbl1');
+	var rowList = table.rows;
+	
+	for(i=1; i<rowList.length; i++){
+		var row = rowList[i];
+		var aTagInSecondTd = row.cells[7].querySelector('a');
+		
+		if(aTagInSecondTd) {
+			aTagInSecondTd.onclick = function() {
+				
+				var usr_id = this.closest('tr').cells[0].innerHTML;
+				
+				alert(usr_id);
+			};
+		}
+	}
 	/* 
 	$.ajax({
 		url : "<c:url value='/deleteUsr.ajax'/>",

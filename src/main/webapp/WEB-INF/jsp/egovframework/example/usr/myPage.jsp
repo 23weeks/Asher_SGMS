@@ -307,7 +307,7 @@ function stdGrpMasterCheck() {
 				<button id="StdGrpListBtn" type="button" onclick="selectStdGrpList()">전체 스터디 목록 조회</button>
 			</div>
 			<div>
-				<button id="UsrUpdateBtn" type="button" onclick="UsrUpdate()">회원 정보 수정(미완)</button>
+				<button id="UsrUpdateBtn" type="button" onclick="UsrUpdate()">회원 정보 수정</button>
 			</div>
 			<div>
 				<button id="selectAttRateBtn" type="button" onclick="selectAttRate()">출석률 조회</button>

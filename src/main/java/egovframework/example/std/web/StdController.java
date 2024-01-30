@@ -446,17 +446,4 @@ public class StdController {
 		
 		return mv;
 	}
-	
-	
-	/**
-	 * 출석률 조회 팝업
-	 * @param 
-	 * @param 
-	 * @return 
-	 * @exception Exception
-	 */
-	@RequestMapping(value = "/updateInfo.do")
-	public String updateInfo() throws Exception {
-		return "std/updateInfo";
-	}
 }

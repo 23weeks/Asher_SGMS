@@ -326,4 +326,54 @@ public class UsrController {
 	public String myPage() throws Exception {
 		return "usr/myPage";
 	}
+	
+	/**
+	 * 회원 정보 수정
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updateInfo.do")
+	public String updateInfo() throws Exception {
+		return "usr/updateInfo";
+	}
+	
+	/**
+	 * 회원 정보 수정
+	 * @param usrVO - usr_id, usr_pwd, usr_brth, usr_phone, usr_addr
+	 * @param 
+	 * @return void
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/updateInfo.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView updateInfo(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		usrService.updateInfo(usrVO);
+		
+		return mv;
+	}
+	
+	/**
+	 * 회원 정보 불러오기
+	 * @param usrVO - usr_id
+	 * @param 
+	 * @return usrVO - usr_pwd, usr_brth, usr_phone
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/selectUsrInfo.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView selectUsrInfo(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		UsrVO result = usrService.selectUsrInfo(usrVO);
+		
+		resultMap.put("result", result);
+		
+		mv.addAllObjects(resultMap);
+		return mv;
+	}
 }
