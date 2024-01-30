@@ -44,15 +44,21 @@ public class StdVO extends UsrVO implements Serializable {
 	private String dsc;
 	private String cre_date;
 	private String req_date;
-	
 	private String std_yyyymm;
+	
+	private String std_yyyymmdd;
 	private String std_schd_noti;
 	
-	public String getStd_yyyymm() {
-		return std_yyyymm;
+	private String join_yn;
+	
+	private String att_rate;
+	private String stat_month;
+	
+	public String getStd_yyyymmdd() {
+		return std_yyyymmdd;
 	}
-	public void setStd_yyyymm(String std_yyyymm) {
-		this.std_yyyymm = std_yyyymm;
+	public void setStd_yyyymmdd(String std_yyyymm) {
+		this.std_yyyymmdd = std_yyyymm;
 	}
 	public String getStd_schd_noti() {
 		return std_schd_noti;
@@ -112,6 +118,31 @@ public class StdVO extends UsrVO implements Serializable {
 	public String toString() {
 		return "StdVO [grp_id=" + grp_id + ", grp_name=" + grp_name + ", grp_master=" + grp_master + ", grp_type="
 				+ grp_type + ", dsc=" + dsc + ", cre_date=" + cre_date + ", req_date=" + req_date + ", std_yyyymm="
-				+ std_yyyymm + ", std_schd_noti=" + std_schd_noti + "]";
+				+ std_yyyymm + ", std_yyyymmdd=" + std_yyyymmdd + ", std_schd_noti=" + std_schd_noti + ", join_yn="
+				+ join_yn + ", att_rate=" + att_rate + ", stat_month=" + stat_month + "]";
+	}
+	public String getStd_yyyymm() {
+		return std_yyyymm;
+	}
+	public void setStd_yyyymm(String std_yyyymm) {
+		this.std_yyyymm = std_yyyymm;
+	}
+	public String getJoin_yn() {
+		return join_yn;
+	}
+	public void setJoin_yn(String join_yn) {
+		this.join_yn = join_yn;
+	}
+	public String getAtt_rate() {
+		return att_rate;
+	}
+	public void setAtt_rate(String att_rate) {
+		this.att_rate = att_rate;
+	}
+	public String getStat_month() {
+		return stat_month;
+	}
+	public void setStat_month(String stat_month) {
+		this.stat_month = stat_month;
 	}
 }

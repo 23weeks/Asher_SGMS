@@ -165,6 +165,28 @@ function UsrUpdate() {
 	popupWindow.moveTo(leftPosition, topPosition);
 }
 
+//출석률 조회
+function selectAttRate() {
+	var Url = "<c:url value='/selectAttRate.do'/>";
+	
+	// 팝업 창의 초기 크기 설정
+	var popupWidth = 600;
+	var popupHeight = 700;
+
+	// 현재 화면 크기 가져오기
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	// 팝업 창의 위치 계산
+	var leftPosition = (screenWidth - popupWidth) / 2;
+	var topPosition = (screenHeight - popupHeight) / 2;
+
+	// 팝업 창 열기
+	var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+	  
+	// 화면 가운데로 이동
+	popupWindow.moveTo(leftPosition, topPosition);
+}
 /* 스터디 그룹 생성 */
 function stdGrpMasterCheck() {
 	var usr_id = '<%= (String) session.getAttribute("usr_id")%>';
@@ -286,6 +308,9 @@ function stdGrpMasterCheck() {
 			</div>
 			<div>
 				<button id="UsrUpdateBtn" type="button" onclick="UsrUpdate()">회원 정보 수정(미완)</button>
+			</div>
+			<div>
+				<button id="selectAttRateBtn" type="button" onclick="selectAttRate()">출석률 조회</button>
 			</div>
 		</div>
 		<div class="rightDiv">

@@ -317,7 +317,7 @@ public class StdController {
 	
 	/**
 	 * 일정 추가
-	 * @param StdVO - grp_id, std_yyyymm
+	 * @param StdVO - grp_id, std_yyyymmdd
 	 * @param 
 	 * @return 
 	 * @exception Exception
@@ -345,5 +345,118 @@ public class StdController {
 		mv.addAllObjects(resultMap);
 		
 		return mv;
+	}
+	
+	/**
+	 * 참석 여부 확인 팝업
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/stdGrpSchdJoinYn.do")
+	public String stdGrpSchdJoinYn() throws Exception {
+		return "std/stdGrpSchdJoinYn";
+	}
+
+	/**
+	 * 스터디 그룹 유저 목록 조회
+	 * @param StdVO - grp_id
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/selectStdUsrList.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView selectStdUsrList(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		//유저 조회
+		List<StdVO> resultList = stdService.selectStdUsrList(stdVO);
+		
+		
+		resultMap.put("resultList", resultList);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 스터디 그룹 참여 Yn
+	 * @param StdVO - grp_id, std_yyyymmdd, usr_id, joinYn
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/insertStdSchdYn.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView insertStdSchdYn(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String errMsg = "";
+		
+		int std_yyyymmddCheck = stdService.std_yyyymmddCheck(stdVO);
+		if(std_yyyymmddCheck != 0) {
+			errMsg = "이미 참석여부가 저장된 유저입니다.";
+		}else {
+			stdService.insertStdResult(stdVO);
+		}
+		
+		resultMap.put("errMsg", errMsg);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	/**
+	 * 출석률 조회 팝업
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/selectAttRate.do")
+	public String selectAttRate() throws Exception {
+		return "std/selectAttRate";
+	}
+	
+	/**
+	 * 출석률 조회
+	 * @param StdVO - usr_id
+	 * @param 
+	 * @return List<StdVO>
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/selectAttRate.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView selectAttRate(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<StdVO> resultList = stdService.selectAttRate(stdVO);
+		
+		resultMap.put("resultList", resultList);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 출석률 조회 팝업
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updateInfo.do")
+	public String updateInfo() throws Exception {
+		return "std/updateInfo";
 	}
 }

@@ -156,7 +156,7 @@
 										, GRP_ID
 										, STD_SCHD_NOTI
 									) VALUES (
-										  #{std_yyyymm}
+										  #{std_yyyymmdd}
 										, #{grp_id}
 										, NOW()
 									)
@@ -169,4 +169,85 @@
 		 WHERE STD_YYYYMM = #{std_yyyymm}
 		   AND GRP_ID = #{grp_id}
 	</select>
+	
+	<!-- 스터디 그룹 유저 목록 조회 -->
+	<select id="selectStdUsrList" parameterType="stdVO" resultType="stdVO">
+		SELECT USR_ID
+		  FROM SGMS_STD_USR_LIST
+		 WHERE GRP_ID = #{grp_id}
+	</select>
+	
+	<!-- 스터디 참여 결과 insert -->
+	<insert id="insertStdResult" parameterType="stdVO">
+		INSERT INTO SGMS_STD_GRP_RSLT(
+										  GRP_ID
+										, USR_ID
+										, STD_YYYYMMDD
+										, JOIN_YN
+									) VALUES (
+										  #{grp_id}
+										, #{usr_id}
+										, #{std_yyyymmdd}
+										, #{join_yn}
+									)
+	</insert>
+	
+	<!-- 스터디 그룹 유저 결과 조회(std_yyyymmdd) -->
+	<select id="std_yyyymmddCheck" parameterType="stdVO" resultType="int">
+		SELECT
+			  COUNT(*)
+		  FROM SGMS_STD_GRP_RSLT
+		 WHERE GRP_ID = #{grp_id}
+		   AND USR_ID = #{usr_id}
+		   AND STD_YYYYMMDD = #{std_yyyymmdd}
+	</select>
+	
+	<!-- 출석률 조회 -->
+	<select id="selectAttRate" parameterType="stdVO" resultType="stdVO">
+		SELECT
+			  A.GRP_ID
+			, A.STAT_MONTH
+			, A.ATT_RATE
+			, B.GRP_NAME
+		  FROM SGMS_STD_GRP_STAT A
+		  LEFT JOIN SGMS_STD_GRP_LIST B
+				 ON A.GRP_ID = B.GRP_ID
+		 WHERE A.USR_ID = #{usr_id}
+		 ORDER BY A.STAT_MONTH DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 이전 달 출석 횟수 * 100 -->
+	<select id="selectSchdRslt" parameterType="stdVO" resultType="stdVO">
+		SELECT
+			  GRP_ID
+			, USR_ID
+			, SUM(CASE WHEN JOIN_YN = 'Y' THEN 1 ELSE 0 END) * 100 / COUNT(*) AS ATT_RATE
+		  FROM SGMS_STD_GRP_RSLT
+		 WHERE STR_TO_DATE(STD_YYYYMMDD, '%Y%m%d') BETWEEN DATE_ADD(LAST_DAY(DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)), INTERVAL 1 DAY) 
+															AND LAST_DAY(DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH))
+		 GROUP BY GRP_ID, USR_ID
+	</select>
+	
+	<!-- 뽑아낸 출석률 stat 테이블에 insert -->
+	<insert id="insertSChdStat" parameterType="stdVO">
+		INSERT INTO SGMS_STD_GRP_STAT (
+										  STAT_MONTH
+										, USR_ID
+										, GRP_ID
+										, ATT_RATE
+									) VALUES (
+										  #{std_yyyymm}
+										, #{usr_id}
+										, #{grp_id}
+										, #{att_rate}
+									)
+	</insert>
 </mapper>

@@ -37,7 +37,7 @@ function selectStdGrpInfo() {
 	$.ajax({
 		url : "<c:url value='/stdGrpInfo.ajax'/>",
 		type : "post",
-		async : true,
+		async : false,
 		data : {
 			"usr_id"	: usr_id,
 			"grp_id"	: grp_id
@@ -47,23 +47,25 @@ function selectStdGrpInfo() {
 			var result = data.result;
 			var result_schd = data.result_schd;
 			var stdUsrCheck = data.stdUsrCheck;
-			var std_schd = $('#std_schd');
-			std_schd.html("");
+			//tbody 초기화
+			var resultTblBody = $('#resultTbl tbody');
+			resultTblBody.html('');
 			
 			$('#grp_name').html(result.grp_name);
 			$('#dsc').html(result.dsc);
 			
-			//일정
-			if(result_schd != null && result_schd.length != 0){
-				for(var i=0; i<result_schd.length; i++){
-					var std_year = result_schd[i].std_yyyymm.substring(0,4);
-					var std_month = result_schd[i].std_yyyymm.substring(4,6);
-					var std_day = result_schd[i].std_yyyymm.substring(6,8);
-					
-					std_schd.append($('<h2 style="font-size: 20px; padding-bottom: 10px">').html(std_year + ' - ' + std_month + ' - ' + std_day + '<a style="margin-left:300px">참석 여부</a>'));
-				}
-			}else{
-				std_schd.append($('<h2 style="text-align: left;">').html("일정이 없습니다."));
+			//데이터 루프
+			for(var i=0; i<result_schd.length; i++){
+				var row = $('<tr>');
+				var std_year = result_schd[i].std_yyyymm.substring(0,4);
+				var std_month = result_schd[i].std_yyyymm.substring(4,6);
+				var std_day = result_schd[i].std_yyyymm.substring(6,8);
+				
+				row.append($('<td style="display: none;">').html(result_schd[i].std_yyyymm));
+				row.append($('<td>').html(std_year + ' - ' + std_month + ' - ' + std_day));
+				row.append($('<td style="text-align:center;">').html('<a class="joinYnBtn" onclick="getStdYYYYMM()">참석 여부</a>'));
+				
+				resultTblBody.append(row);
 			}
 			
 			//그룹원 체크
@@ -88,7 +90,7 @@ function selectStdGrpInfo() {
 function addSchd() {
 	var grp_id = '${param.grp_id}';
 	
-var Url = "<c:url value='/addSchd.do'/>";
+	var Url = "<c:url value='/addSchd.do'/>";
 	
 	//get방식 parameter 추가
 	Url += "?grp_id=" + grp_id;
@@ -171,7 +173,72 @@ function stdGrpSubReq() {
 		});	
 	}
 }
+
+/* std_yyyymmdd 가져오기 */
+function getStdYYYYMM() {
+	var table = document.getElementById('resultTbl');
+	var rowList = table.rows;
+	
+	for(i=1; i<rowList.length; i++){
+		var row = rowList[i];
+		var aTagInSecondTd = row.cells[2].querySelector('a');
+		
+		if(aTagInSecondTd) {
+			aTagInSecondTd.onclick = function() {
+				
+				var std_yyyymmdd = this.closest('tr').cells[0].innerHTML;
+				
+				joinYn(std_yyyymmdd);
+			};
+		}
+	}
+}
+
+//참석여부 팝업
+function joinYn(std_yyyymmdd){
+	
+	var grp_id = '${param.grp_id}';
+	
+	var Url = "<c:url value='/stdGrpSchdJoinYn.do'/>";
+	
+	//get방식 parameter 추가
+	Url += "?grp_id=" + grp_id;
+	Url += "&std_yyyymmdd=" + std_yyyymmdd;
+	
+	// 팝업 창의 초기 크기 설정
+	var popupWidth = 550;
+	var popupHeight = 600;
+
+	// 현재 화면 크기 가져오기
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	// 팝업 창의 위치 계산
+	var leftPosition = (screenWidth - popupWidth) / 2;
+	var topPosition = (screenHeight - popupHeight) / 2;
+
+	// 팝업 창 열기
+	var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+	  
+	// 화면 가운데로 이동
+	popupWindow.moveTo(leftPosition, topPosition);
+}
 </script>
+<style>
+	.main-content thead tr th {
+		font-family: Arial, sans-serif;
+		font-size: 20px;
+	}
+	
+	.main-content tbody tr td {
+		font-family: Arial, sans-serif;
+		font-size: 16px;
+	}
+	.joinYnBtn:hover {
+		font-family: Arial, sans-serif;
+		font-size: 16px;
+	}
+</style>
 </head>
 <body>
 	<div class="main-content" style="margin-top: 20px; padding: 0 0 0 20px">
@@ -185,10 +252,17 @@ function stdGrpSubReq() {
 		</div>
 		
 		<div id="main_content-body" style="height: 430px; background-color: #f0f0f0; width: 540px; padding: 5px; border: 1px solid; margin-bottom: 10px">
-			<div style="margin-bottom: 20px">
-				<h1>일정</h1>
-			</div>
-			<div id="std_schd" style="margin-bottom: 20px; padding-left: 20px">
+			<div id="std_schd" style="margin-bottom: 20px;">
+				<table id="resultTbl">
+					<thead>
+						<tr>
+							<th style="width: 400px; text-align: left">일정</th>
+							<th style="width: 100px"></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div style="text-align: center">

@@ -147,7 +147,7 @@ public interface StdService {
 	
 	/**
 	 * 일정 추가
-	 * @param stdVO - grp_id, std_yyyymm
+	 * @param stdVO - grp_id, std_yyyymmdd
 	 * @return void
 	 * @exception Exception
 	 */
@@ -155,9 +155,71 @@ public interface StdService {
 	
 	/**
 	 * 일정 체크
-	 * @param stdVO - grp_id, std_yyyymm
+	 * @param stdVO - grp_id, std_yyyymmdd
 	 * @return boolean
 	 * @exception Exception
 	 */
 	int selectSchdCheck(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 그룹 유저 목록 조회
+	 * @param stdVO - grp_id
+	 * @return List<StdVO>
+	 * @exception Exception
+	 */
+	List<StdVO> selectStdUsrList(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 결과 insert
+	 * @param stdVO - grp_id, usr_id, std_yyyymmdd
+	 * @return void
+	 * @exception Exception
+	 */
+	void insertStdResult(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 그룹 유저 결과 조회(std_yyyymmdd)
+	 * @param stdVO - grp_id, usr_id, std_yyyymmdd
+	 * @return void
+	 * @exception Exception
+	 */
+	List<StdVO> selectStdUsrStdYyyymmdd(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 결과 확인
+	 * @param stdVO - grp_id, usr_id std_yyyymmdd, join_yn
+	 * @return boolean
+	 * @exception Exception
+	 */
+	int std_yyyymmddCheck(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 출석률 조회
+	 * @param stdVO - usr_id
+	 * @return List<stdVO> - grp_id, grp_name, att_rate
+	 * @exception Exception
+	 */
+	List<StdVO> selectAttRate(StdVO stdVO) throws Exception;
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 스케쥴러
+	 * @param
+	 * @return List<StdVO>
+	 * @exception Exception
+	 */
+	List<StdVO> selectSchdRslt() throws Exception;
+	
+	/**
+	 * 통계 테이블 데이터 입력
+	 * @param StdVO - std_yyyymm, usr_id, grp_id, att_rate
+	 * @return void
+	 * @exception Exception
+	 */
+	void insertSChdStat(StdVO stdVO) throws Exception;
 }
