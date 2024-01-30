@@ -17,6 +17,7 @@ package egovframework.example.admin.service;
 
 import java.util.List;
 
+import egovframework.example.std.vo.StdVO;
 import egovframework.example.usr.vo.UsrVO;
 
 /**
@@ -39,4 +40,12 @@ public interface AdminService {
 	 * @exception Exception
 	 */
 	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 그룹별 통계
+	 * @param 
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	List<StdVO> selectGrpAttRate(StdVO stdVO) throws Exception;
 }

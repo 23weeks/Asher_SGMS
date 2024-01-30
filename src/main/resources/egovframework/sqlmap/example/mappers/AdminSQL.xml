@@ -15,4 +15,17 @@
 		  FROM SGMS_USR_LIST
 		 ORDER BY USR_LEVL, CRE_DATE DESC, USR_NAME
 	</select>
+	
+	<!-- 그룹별 통계 -->
+	<select id="selectGrpAttRate" parameterType="stdVO" resultType="stdVO">
+		SELECT
+			  A.GRP_ID
+			, A.STAT_MONTH
+			, ROUND(SUM(ATT_RATE) / COUNT(ATT_RATE), 1) AS ATT_RATE
+			, B.GRP_NAME 
+		  FROM SGMS_STD_GRP_STAT A
+		  LEFT JOIN SGMS_STD_GRP_LIST B
+				 ON A.GRP_ID = B.GRP_ID
+		 GROUP BY A.GRP_ID, B.GRP_NAME
+	</select>
 </mapper>

@@ -156,7 +156,7 @@
 										, GRP_ID
 										, STD_SCHD_NOTI
 									) VALUES (
-										  #{std_yyyymmdd}
+										  #{std_yyyymm}
 										, #{grp_id}
 										, NOW()
 									)
@@ -216,10 +216,17 @@
 		 ORDER BY A.STAT_MONTH DESC
 	</select>
 	
+	<!-- 스터디 그룹 삭제 -->
+	<delete id="deleteStdGrp" parameterType="stdVO">
+		DELETE FROM SGMS_STD_GRP_LIST
+		 WHERE GRP_ID = #{grp_id}
+	</delete>
 	
-	
-	
-	
+	<!-- 삭제된 회원이 마스터인 그룹 삭제 -->
+	<delete id="deleteStdGrp_deletedUsr" parameterType="usrVO">
+		DELETE FROM SGMS_STD_GRP_LIST
+		 WHERE GRP_MASTER = #{usr_id}
+	</delete>
 	
 	
 	
@@ -250,4 +257,9 @@
 										, #{att_rate}
 									)
 	</insert>
+	
+	<delete id="deleteStdGrpUsr" parameterType="stdVO">
+		DELETE FROM SGMS_STD_USR_LIST
+		 WHERE USR_ID = #{usr_id}
+	</delete>
 </mapper>

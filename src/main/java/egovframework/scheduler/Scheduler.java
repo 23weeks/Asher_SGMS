@@ -3,7 +3,6 @@ package egovframework.scheduler;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +31,8 @@ public class Scheduler {
 	@Autowired
 	private StdService stdService;
 	
-	/*
-	 * 프로젝트 구현 완료되면 주석 해제하고 아래 @Scheduled 삭제
-	 * @Scheduled(cron = "0 0 0 1 * ?")		//매월 1일 0시 0분 0초에 실행
-	 */
-	@Scheduled(fixedDelay = 6000000)
+	@Scheduled(cron = "0 0 0 1 * ?")		//매월 1일 0시 0분 0초에 실행
+	//@Scheduled(fixedDelay = 6000000)
 	public void monthlyStatisticsScheduler() throws Exception {
 		
 		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -53,11 +49,8 @@ public class Scheduler {
 		String formattedMonth2 = oneMonthAgo.format(formatter);
 		System.out.println("익월(YYYYMM) : " + formattedMonth2);
 		
-		/**************************************완성되면 주석 해제*****************************************/
-		
 		//GRP_ID, USR_ID 별 출석률
 		List<StdVO> resultList = stdService.selectSchdRslt();
-		
 		
 		//데이터 루프
 		for(int i=0; i<resultList.size(); i++) {

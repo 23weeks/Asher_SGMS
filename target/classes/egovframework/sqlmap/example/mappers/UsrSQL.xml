@@ -93,4 +93,10 @@
 		  FROM SGMS_USR_LIST
 		 WHERE USR_ID = #{usr_id}
 	</select>
+	
+	<!-- 회원 삭제 -->
+	<delete id="deleteUsr" parameterType="usrVO">
+		DELETE FROM SGMS_USR_LIST
+		 WHERE USR_ID = #{usr_id}
+	</delete>
 </mapper>

@@ -140,4 +140,15 @@ public class UsrServiceImpl extends EgovAbstractServiceImpl implements UsrServic
 	public void updateInfo(UsrVO usrVO) throws Exception {
 		usrMapper.updateInfo(usrVO);
 	}
+
+	/**
+	 * 회원 삭제
+	 * @param usrVO - usr_id
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void deleteUsr(UsrVO usrVO) throws Exception {
+		usrMapper.deleteUsr(usrVO);
+	}
 }

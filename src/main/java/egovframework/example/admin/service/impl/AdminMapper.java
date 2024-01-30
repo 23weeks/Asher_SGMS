@@ -17,6 +17,7 @@ package egovframework.example.admin.service.impl;
 
 import java.util.List;
 
+import egovframework.example.std.vo.StdVO;
 import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -45,4 +46,12 @@ public interface AdminMapper {
 	 * @exception Exception
 	 */
 	List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 그룹별 통계
+	 * @param 
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	List<StdVO> selectGrpAttRate(StdVO stdVO) throws Exception;
 }

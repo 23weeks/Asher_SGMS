@@ -63,7 +63,7 @@ function selectStdGrpInfo() {
 				
 				row.append($('<td style="display: none;">').html(result_schd[i].std_yyyymm));
 				row.append($('<td>').html(std_year + ' - ' + std_month + ' - ' + std_day));
-				row.append($('<td style="text-align:center;">').html('<a class="joinYnBtn" onclick="getStdYYYYMM()">참석 여부</a>'));
+				row.append($('<td class="joinBtn" style="text-align:center;">').html('<a class="joinYnBtn" onclick="getStdYYYYMM()">참석 여부</a>'));
 				
 				resultTblBody.append(row);
 			}
@@ -79,6 +79,8 @@ function selectStdGrpInfo() {
 				$('#addSchdBtn').css({"display" : "none"});
 				//가입 신청 목록 버튼
 				$('#stdGrpSubReqListBtn').css({"display" : "none"});
+				//출석 여부 버튼
+				$('.joinYnBtn').css({"display" : "none"});
 			}
 		},
 		error : function(request, status, error) {

@@ -65,7 +65,7 @@ function selectUsrList() {
 				row.append($('<td style="text-align: left;">').html(result[i].usr_addr));
 				row.append($('<td>').html(usr_levl));
 				row.append($('<td>').html(result[i].cre_date));
-				row.append($('<td>').html('<a id="deleteBtn1_'+ i + '" onclick="deleteUsr('+usr_id+')">삭제</a>'));
+				row.append($('<td>').html('<a id="deleteBtn1_'+ i + '" onclick="deleteUsr()">삭제</a>'));
 				
 				resultTblBody.append(row);
 			}
@@ -77,7 +77,7 @@ function selectUsrList() {
 }
 
 /* 회원 삭제 */
-function deleteUsr(usr_id) {
+function deleteUsr() {
 	var table = document.getElementById('resultTbl1');
 	var rowList = table.rows;
 	
@@ -90,34 +90,37 @@ function deleteUsr(usr_id) {
 				
 				var usr_id = this.closest('tr').cells[0].innerHTML;
 				
-				alert(usr_id);
+				deleteData(usr_id);
 			};
 		}
 	}
-	/* 
-	$.ajax({
-		url : "<c:url value='/deleteUsr.ajax'/>",
-		type : "post",
-		async : true,
-		data : {
-				"usr_id"	:	usr_id
-		},
-		dataType : "json",
-		success : function(data) {
-			var result = data.resultList;
-			console.log(result);
-			
-			//tbody 초기화
-			var resultTblBody = $('#resultTbl2 tbody');
-			resultTblBody.html('');
-			
-			//유저 목록 조회
-			selectUsrList();
-		},
-		error : function(request, status, error) {
-		}
-	});
-	 */
+}
+
+/* 회원 정보 삭제 */
+function deleteData(usr_id) {
+	if(confirm("[ " + usr_id + " ] 회원을 삭제하시겠습니까?")){
+		$.ajax({
+			url : "<c:url value='/deleteUsr.ajax'/>",
+			type : "post",
+			async : true,
+			data : {
+					"usr_id"	:	usr_id
+			},
+			dataType : "json",
+			success : function() {
+				alert("회원 삭제가 완료됐습니다.");
+				
+				//tbody 초기화
+				var resultTblBody = $('#resultTbl1 tbody');
+				resultTblBody.html('');
+				
+				//유저 목록 조회
+				selectUsrList();
+			},
+			error : function(request, status, error) {
+			}
+		});
+	}
 }
 
 /* 스터디 목록 관리 */
@@ -144,12 +147,13 @@ function selectStdGrpList() {
 			//데이터 루프
 			for(var i=0; i<result.length; i++){
 				var row = $('<tr>');
+				row.append($('<td style="text-align: left; display:none;">').html(result[i].grp_id));
 				row.append($('<td style="text-align: left;">').html(result[i].grp_name));
 				row.append($('<td style="text-align: left;">').html(result[i].grp_master));
 				row.append($('<td>').html(result[i].grp_type));
 				row.append($('<td style="text-align: left;">').html(result[i].dsc));
 				row.append($('<td>').html(result[i].cre_date));
-				row.append($('<td>').html('<a id="deleteBtn2_'+ i + '" onclick="deleteStdGrp('+result[i].grp_id+')">삭제</a>'));
+				row.append($('<td>').html('<a id="deleteBtn2_'+ i + '" onclick="deleteStdGrp()">삭제</a>'));
 				
 				resultTblBody.append(row);
 			}
@@ -160,10 +164,51 @@ function selectStdGrpList() {
 }
 
 /* 스터디 그룹 삭제 */
-function deleteStdGrp(grp_id) {
-	alert("스터디 그룹 삭제");
+function deleteStdGrp() {
+	var table = document.getElementById('resultTbl2');
+	var rowList = table.rows;
+	
+	for(i=1; i<rowList.length; i++){
+		var row = rowList[i];
+		var aTagInSecondTd = row.cells[6].querySelector('a');
+		
+		if(aTagInSecondTd) {
+			aTagInSecondTd.onclick = function() {
+				
+				var grp_id = this.closest('tr').cells[0].innerHTML;
+				
+				alert(grp_id);
+			};
+		}
+	}
 }
 
+/* 스터디 그룹 정보 삭제 */
+function deleteStdGrpData(grp_id) {
+	if(confirm("[ " + grp_id + " ] 그룹을 삭제하시겠습니까?")){
+		$.ajax({
+			url : "<c:url value='/deleteStdGrp.ajax'/>",
+			type : "post",
+			async : true,
+			data : {
+					"grp_id"	:	grp_id
+			},
+			dataType : "json",
+			success : function() {
+				alert("스터디 그룹 삭제가 완료됐습니다.");
+				
+				//tbody 초기화
+				var resultTblBody = $('#resultTbl2 tbody');
+				resultTblBody.html('');
+				
+				//그룹 목록 조회
+				selectStdGrpList();
+			},
+			error : function(request, status, error) {
+			}
+		});
+	}
+}
 /* ID/비밀번호 찾기 */
 function find() {
 	var Url = "<c:url value='/find.do'/>";
@@ -171,6 +216,29 @@ function find() {
 	// 팝업 창의 초기 크기 설정
 	var popupWidth = 600;
 	var popupHeight = 800;
+
+	// 현재 화면 크기 가져오기
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	// 팝업 창의 위치 계산
+	var leftPosition = (screenWidth - popupWidth) / 2;
+	var topPosition = (screenHeight - popupHeight) / 2;
+
+	// 팝업 창 열기
+	var popupWindow = window.open(Url, "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + leftPosition + ",top=" + topPosition);
+	  
+	// 화면 가운데로 이동
+	popupWindow.moveTo(leftPosition, topPosition);
+}
+
+/* 통계 조회 */
+function selectAttRate() {
+	var Url = "<c:url value='/selectGrpAttRate.do'/>";
+	
+	// 팝업 창의 초기 크기 설정
+	var popupWidth = 600;
+	var popupHeight = 700;
 
 	// 현재 화면 크기 가져오기
 	var screenWidth = window.screen.width;
@@ -250,7 +318,7 @@ function find() {
 				<button id="stdGrpListBtn" type="button" onclick="selectStdGrpList()">스터디 목록 관리</button>
 			</div>
 			<div>
-				<button type="button">통계 조회</button>
+				<button id="selectAttRateBtn" type="button" onclick="selectAttRate()">통계 조회</button>
 			</div>
 		</div>
 		<div class="rightDiv">

@@ -98,4 +98,40 @@ public class AdminController {
 		
 		return mv;
 	}
+	
+
+	/**
+	 * 출석률 조회 팝업(관리자)
+	 * @param 
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/selectGrpAttRate.do")
+	public String selectAttRate() throws Exception {
+		return "admin/selectGrpAttRate";
+	}
+	
+	/**
+	 * 출석률 조회(관리자)
+	 * @param StdVO - usr_id
+	 * @param 
+	 * @return List<StdVO>
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/selectGrpAttRate.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView selectGrpAttRate(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<StdVO> resultList = adminService.selectGrpAttRate(stdVO);
+		
+		resultMap.put("resultList", resultList);
+		
+		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
 }

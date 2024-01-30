@@ -36,5 +36,4 @@ public class AdminVO extends UsrVO implements Serializable {
 	 *  serialVersion UID
 	 */
 	private static final long serialVersionUID = -858838578081269359L;
-
 }

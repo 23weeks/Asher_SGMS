@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import egovframework.example.admin.service.AdminService;
+import egovframework.example.std.vo.StdVO;
 import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
@@ -63,5 +64,16 @@ public class AdminServiceImpl extends EgovAbstractServiceImpl implements AdminSe
 	@Override
 	public List<UsrVO> selectUsrList(UsrVO usrVO) throws Exception {
 		return adminMapper.selectUsrList(usrVO);
+	}
+
+	/**
+	 * 그룹별 통계
+	 * @param 
+	 * @return List<stdVO>
+	 * @exception Exception
+	 */
+	@Override
+	public List<StdVO> selectGrpAttRate(StdVO stdVO) throws Exception {
+		return adminMapper.selectGrpAttRate(stdVO);
 	}
 }

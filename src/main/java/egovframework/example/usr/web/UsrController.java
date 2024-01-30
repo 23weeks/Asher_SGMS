@@ -33,6 +33,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import egovframework.example.std.service.StdService;
 import egovframework.example.usr.service.UsrService;
 import egovframework.example.usr.vo.UsrVO;
 import egovframework.rte.fdl.property.EgovPropertyService;
@@ -56,6 +57,9 @@ public class UsrController {
 	@Resource(name = "usrService")
 	private UsrService usrService;
 
+	@Resource(name = "stdService")
+	private StdService stdService;
+	
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
@@ -374,6 +378,30 @@ public class UsrController {
 		resultMap.put("result", result);
 		
 		mv.addAllObjects(resultMap);
+		return mv;
+	}
+	
+	/**
+	 * 회원 삭제
+	 * @param usrVO - usr_id
+	 * @param 
+	 * @return 
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/deleteUsr.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView deleteUsr(@ModelAttribute("usrVO") UsrVO usrVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		//회원 삭제
+		usrService.deleteUsr(usrVO);
+		
+		//삭제된 회원이 마스터인 그룹 삭제
+		stdService.deleteStdGrp_deletedUsr(usrVO);
+		
+		//스터디 그룹 회원 목록에서 회원 삭제
+		stdService.deleteStdGrpUsr(usrVO);
+		
 		return mv;
 	}
 }

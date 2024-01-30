@@ -212,11 +212,21 @@ public interface StdMapper {
 	 */
 	List<StdVO> selectAttRate(StdVO stdVO) throws Exception;
 	
+	/**
+	 * 그룹 삭제
+	 * @param stdVO - grp_id
+	 * @return void
+	 * @exception Exception
+	 */
+	void deleteStdGrp(StdVO stdVO) throws Exception;
 	
-	
-	
-	
-	
+	/**
+	 * 삭제된 회원이 마스터인 그룹 삭제
+	 * @param stdVO - grp_id
+	 * @return void
+	 * @exception Exception
+	 */
+	void deleteStdGrp_deletedUsr(UsrVO usrVO) throws Exception;
 	
 	
 	/**
@@ -234,4 +244,12 @@ public interface StdMapper {
 	 * @exception Exception
 	 */
 	void insertSChdStat(StdVO stdVO) throws Exception;
+	
+	/**
+	 * 스터디 그룹 유저 삭제
+	 * @param UsrVO - usr_id
+	 * @return void
+	 * @exception Exception
+	 */
+	void deleteStdGrpUsr(UsrVO usrVO) throws Exception;
 }

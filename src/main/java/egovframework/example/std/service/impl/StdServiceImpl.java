@@ -274,9 +274,27 @@ public class StdServiceImpl extends EgovAbstractServiceImpl implements StdServic
 		return stdMapper.selectAttRate(stdVO);
 	}
 	
+	/**
+	 * 그룹 삭제
+	 * @param stdVO - grp_id
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void deleteStdGrp(StdVO stdVO) throws Exception {
+		stdMapper.deleteStdGrp(stdVO);
+	}
 	
-	
-	
+	/**
+	 * 삭제된 회원이 마스터인 그룹 삭제
+	 * @param stdVO - grp_id
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void deleteStdGrp_deletedUsr(UsrVO usrVO) throws Exception {
+		stdMapper.deleteStdGrp_deletedUsr(usrVO);
+	}
 	
 	
 	
@@ -305,4 +323,16 @@ public class StdServiceImpl extends EgovAbstractServiceImpl implements StdServic
 	public void insertSChdStat(StdVO stdVO) throws Exception {
 		stdMapper.insertSChdStat(stdVO);
 	}
+
+	/**
+	 * 스터디 그룹 유저 삭제
+	 * @param StdVO - usr_id
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void deleteStdGrpUsr(UsrVO usrVO) throws Exception {
+		stdMapper.deleteStdGrpUsr(usrVO);
+	}
+
 }

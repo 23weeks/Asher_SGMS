@@ -96,4 +96,12 @@ public interface UsrService {
 	 * @exception Exception
 	 */
 	void updateInfo(UsrVO usrVO) throws Exception;
+	
+	/**
+	 * 회원 삭제
+	 * @param usrVO - usr_id
+	 * @return void
+	 * @exception Exception
+	 */
+	void deleteUsr(UsrVO usrVO) throws Exception;
 }

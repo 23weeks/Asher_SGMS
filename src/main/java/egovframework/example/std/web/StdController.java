@@ -375,7 +375,6 @@ public class StdController {
 		//유저 조회
 		List<StdVO> resultList = stdService.selectStdUsrList(stdVO);
 		
-		
 		resultMap.put("resultList", resultList);
 		
 		mv.addAllObjects(resultMap);
@@ -443,6 +442,23 @@ public class StdController {
 		resultMap.put("resultList", resultList);
 		
 		mv.addAllObjects(resultMap);
+		
+		return mv;
+	}
+	
+	/**
+	 * 그룹 삭제
+	 * @param StdVO - grp_id
+	 * @param 
+	 * @return void
+	 * @exception Exception
+	 */
+	@ResponseBody
+	@RequestMapping(path = "/deleteStdGrp.ajax", method=RequestMethod.POST, produces="application/json")
+	public ModelAndView deleteStdGrp(@ModelAttribute("stdVO") StdVO stdVO, ModelMap model) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		stdService.deleteStdGrp(stdVO);
 		
 		return mv;
 	}
